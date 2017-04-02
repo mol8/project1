@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:security="http://www.springframework.org/schema/security"
+	xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-4.0.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<security:http>
+		<security:intercept-url pattern="/calendar" access="permitAll"/>
+		<security:intercept-url pattern="/nuevaCita" access="permitAll"/>
+		<security:intercept-url pattern="/nuevaCita/*" access="permitAll"/>
+		<security:intercept-url pattern="/nuevaCita/*/*" access="permitAll"/>
+		<security:intercept-url pattern="/nuevaCita/*/*/*" access="permitAll"/>
+		<security:intercept-url pattern="/nuevaCita_2/*" access="permitAll"/>
+		<security:intercept-url pattern="/nuevaCita_2/*/*" access="permitAll"/>
+		<security:intercept-url pattern="/nuevaCita_2/*/*/*" access="permitAll"/>
+		<security:intercept-url pattern="/nuevaCita_2/*/*/*/*" access="permitAll"/>
+		<security:intercept-url pattern="/login" access="permitAll"/>
+		<security:intercept-url pattern="/doLogin" access="permitAll"/>
+		<security:intercept-url pattern="/logout" access="permitAll"/>
+		<security:intercept-url pattern="/home" access="hasRole('ROLE_USUARIO')"/>
+		<security:intercept-url pattern="/entrada/*" access="hasRole('ROLE_USUARIO')"/>
+		<security:intercept-url pattern="/doLogin" access="permitAll"/>
+		<security:intercept-url pattern="/login?error=true" access="permitAll"/>
+		<security:form-login login-page="/login" login-processing-url="/doLogin" authentication-success-handler-ref="authSuccessHandler"
+		authentication-failure-url="/login?error=true" username-parameter="usuario" password-parameter="password"/>
+		<security:csrf disabled="true"/>
+		<security:logout logout-url="/logout" logout-success-url="/login"/>
+	</security:http>
+	
+	<bean id="authSuccessHandler" class="com.project.security.AuthSuccessHandler" />
+		
+	<bean id="userDetailsServiceImpl" class="com.project.security.UserDetailsServiceImpl"></bean>
+	<bean id="authenticationProvider" class="org.springframework.security.authentication.dao.DaoAuthenticationProvider">
+		<property name="userDetailsService" ref="userDetailsServiceImpl"></property>
+	</bean>
+	
+	<bean id="authenticationManager" class="org.springframework.security.authentication.ProviderManager">
+		<constructor-arg name="providers">
+			<list>
+				<ref bean="authenticationProvider"/>
+			</list>
+		</constructor-arg>
+	</bean>
+	
+	<security:authentication-manager>
+		<security:authentication-provider user-service-ref="userDetailsServiceImpl">
+			<security:password-encoder hash="plaintext"></security:password-encoder>
+		</security:authentication-provider>
+	</security:authentication-manager>
+
+</beans>
