@@ -109,6 +109,7 @@ public class UsersDAO implements com.project.dao.layer.UsersDAO{
 		try{
 			Session session = HibernateConnection.doHibernateConnection().openSession();
 			Users user = (Users) session.createQuery("From Users where iduser='"+iduser+"'").uniqueResult();
+			session.close();
 			return user;
 		}catch(Exception e){
 			e.printStackTrace();
