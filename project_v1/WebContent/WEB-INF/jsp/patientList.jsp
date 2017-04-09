@@ -33,7 +33,7 @@ xmlns:h="http://java.sun.com/jsf/html">
 	}
 </script>
 
-<title>User List</title>
+<title>Patient List</title>
 </head>
 <body onload="hide(document.querySelectorAll('.alert'));">
 
@@ -47,8 +47,8 @@ xmlns:h="http://java.sun.com/jsf/html">
 		<div id="navbar" class="collapse navbar-collapse">
 			<ul class="nav navbar-nav">
 				<li><a href="${pageContext.request.contextPath}/calendar">Calendario</a></li>
-				<li class="active"><a href="${pageContext.request.contextPath}/userList">Lista de usuarios</a></li>
-				<li><a href="${pageContext.request.contextPath}/patientList">Lista de pacientes</a></li>
+				<li><a href="${pageContext.request.contextPath}/userList">Lista de usuarios</a></li>
+				<li class="active"><a href="${pageContext.request.contextPath}/patientList">Lista de pacientes</a></li>
 				<li><a href="${pageContext.request.contextPath}/home">Inicio</a></li>
 			</ul>		
 			<ul class="nav navbar-nav navbar-right">
@@ -64,8 +64,8 @@ xmlns:h="http://java.sun.com/jsf/html">
 	
 	<div class="container">
 		<div class="jumbotron">
-			<h1>Lista de usuarios</h1>
-			<p>Usuarios almacenados en el sistema</p>
+			<h1>Lista de pacientes</h1>
+			<p>Pacientes almacenados en el sistema</p>
 		</div>
 		
 		<div class="alert alert-success" role="alert">${message}</div>
@@ -81,21 +81,24 @@ xmlns:h="http://java.sun.com/jsf/html">
 				<tr class="header">
 					<th onclick="sortTable(0)">Nombre</th>
 					<th onclick="sortTable(1)">Apellido</th>
-					<th onclick="sortTable(2)">Email</th>
-					<th onclick="sortTable(3)">Role</th>
-					<th >Accion</th>
+					<th onclick="sortTable(2)">Identificador</th>
+					<th onclick="sortTable(3)">Nacimiento</th>
+					<th onclick="sortTable(4)">Sexo</th>
+					<th >Acciones</th>
 				</tr>
 			</thead>
 			<tbody>
-				<c:forEach items="${allUsers}" var="user">
+				<c:forEach items="${allPatients}" var="patient">
 					<tr>
-						<td>${user.getName()}</td>
-						<td>${user.getSurename()}</td>
-						<td>${user.getEmail()}</td>
-						<td>${user.getRole()}</td>
+						<td>${patient.getUsers().getName()}</td>
+						<td>${patient.getUsers().getSurename()}</td>
+						<td>${patient.getIdpatient()}</td>
+						<td>${patient.getDateOfBirth()}</td>
+						<td>${patient.getSex()}</td>
 						<td>
-							<a class="btn btn-sm btn-success" href="${pageContext.request.contextPath}/users/update/${user.getIduser()}" title="Update">update</a> 
-							<a class="btn btn-sm btn-danger" href="${pageContext.request.contextPath}/users/delete/${user.getIduser()}" title="Delete">delete</a>
+							<a class="btn btn-sm btn-success" href="${pageContext.request.contextPath}/patient/update/${patient.getIdpatient()}" title="Update">update</a> 
+							<a class="btn btn-sm btn-success" href="${pageContext.request.contextPath}/patient/viewUser/${patient.getUsers().getIduser()}" title="viewUser">Ver Usuario</a>
+							<a class="btn btn-sm btn-success" href="${pageContext.request.contextPath}/patient/viewStudies/${patient.getIdpatient()}" title="ViewStudies">Ver Estudios</a>
 						</td>
 					</tr>
 				</c:forEach>
@@ -103,7 +106,7 @@ xmlns:h="http://java.sun.com/jsf/html">
 		</table>
 
 		<div class="input-group" style="margin-top: 10px;margin-bottom: 10px;">
-			<form action="${pageContext.request.contextPath}/users/new">
+			<form action="${pageContext.request.contextPath}/patient/new">
 				<input class="btn btn-default" type="submit"
 					value="Crear nuevo usuario" />
 			</form>

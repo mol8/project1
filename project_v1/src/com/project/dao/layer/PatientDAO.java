@@ -8,6 +8,7 @@ import com.project.pojo.Study;
 public interface PatientDAO {
 	
 	public Patient getPatientByID(String string);
+	public Patient getPatientByUser(int iduser);
 	
 	public List<Patient> getAllPatients();
 	

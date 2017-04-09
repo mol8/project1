@@ -36,6 +36,29 @@ public class PatientDAO implements com.project.dao.layer.PatientDAO{
 		session.close();
 		return patient;
 	}
+	
+	@Override
+	public Patient getPatientByUser(int iduser) {
+		logger.info("Buscamos el paciente que pertenezcan a un user: "+iduser);
+		
+		Patient patient = new Patient();
+		
+		Session session = HibernateConnection.doHibernateConnection().openSession();
+		
+		Query query = session.createQuery("from Patient where users.iduser = :iduser");
+		query.setParameter("iduser", iduser);
+		List<Patient> list = query.list();
+		
+		logger.info("Numero de pacientes encontrados: "+ list.size());
+		
+		if(list.size()==1){
+			patient = (Patient) list.get(0);
+			Hibernate.initialize(patient.getUsers());
+		}
+		
+		session.close();
+		return patient;
+	}
 
 	@Override
 	public List<Patient> getAllPatients() {

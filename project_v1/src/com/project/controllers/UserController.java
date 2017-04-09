@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.project.dao.registry.RegistryDAO;
+import com.project.pojo.Patient;
 import com.project.pojo.Users;
 
 @Controller
@@ -124,6 +125,92 @@ public class UserController {
 
 		mav.addObject("message", message);
 		return mav;
+	}
+	
+	@RequestMapping(value = "/users/new", method = RequestMethod.GET)
+	public ModelAndView newUser(HttpSession session){
+		String username = SecurityContextHolder.getContext().getAuthentication().getName();
+		
+		logger.debug("/users/new -> UserController.newUser");
+		logger.info("Creamos nuevo usuario");
+		ModelAndView mav = new ModelAndView("nuevoUsuario");	
+		
+		return mav;
+	}
+	
+	@RequestMapping(value = "/users/new", method = RequestMethod.POST)
+	public ModelAndView newUser(HttpSession session,
+			HttpServletRequest request) {
+		ModelAndView mav = new ModelAndView("userList");
+		
+		logger.debug("/users/new POST -> UserController.newUser() POST");
+		logger.info("Crea nuevo usario en BD.");
+		
+		String username_log = SecurityContextHolder.getContext().getAuthentication().getName();
+		mav.addObject("username", username_log);
+		
+		logger.info(request.getParameter("name"));
+		logger.info(request.getParameter("surename"));
+		logger.info(request.getParameter("username"));
+		logger.info(request.getParameter("email"));
+		logger.info(request.getParameter("password"));
+		logger.info(request.getParameter("role"));
+
+		String name = request.getParameter("name");
+		String surename = request.getParameter("surename");
+		String username = request.getParameter("username");
+		String email = request.getParameter("email");
+		String password = request.getParameter("password");
+		String role = request.getParameter("role");
+		
+		Users usuario = new Users();
+		
+		usuario.setName(name);
+		usuario.setSurename(surename);
+		usuario.setUsername(username);
+		usuario.setEmail(email);
+		usuario.setPassword(password);
+		usuario.setRole(role);
+		
+		RegistryDAO.getUsersDAO().addUser(usuario);
+		
+		List<Users> allUsers = RegistryDAO.getUsersDAO().getAllUsers();
+		mav.addObject("allUsers", allUsers);
+
+		String message = "Usuario creado satisfactoriamente";
+		mav.addObject("message", message);
+		return mav;
+	}
+	
+	
+	@RequestMapping(value = "/users/delete/{iduser}", method = RequestMethod.GET)
+	public String userDelete(@PathVariable(value="iduser") String iduser,HttpSession session, Model model){
+		
+		logger.debug("/userUpdate/{iduser} -> UserController.userUpdate()");
+		logger.info("Actualiza datos de usuario.");
+		
+		String username = SecurityContextHolder.getContext().getAuthentication().getName();
+		model.addAttribute("username",username);
+		int aux = Integer.parseInt(iduser);
+		//model.addAttribute("user", RegistryDAO.getUsersDAO().getUserByID(aux));
+		
+		Users usuario = RegistryDAO.getUsersDAO().getUserByID(aux);
+		
+		//eliminamos el usuario, pero primero tenemos que ver si hay pacientes enlazados con este usuario para ponerlos a NULL antes de borrar el usuario.
+		Patient patient = RegistryDAO.patientDAO.getPatientByUser(aux);
+		patient.setUsers(null);
+		//actualizamos el paciente con user null
+		RegistryDAO.patientDAO.modificaPatient(patient);
+		
+		//borramos el usuario
+		RegistryDAO.usersDAO.deleteUser(aux);
+		
+		model.addAttribute("message", "Usuario "+ usuario.getUsername() +" borrado correctamente");
+		
+		List<Users> allUsers = RegistryDAO.getUsersDAO().getAllUsers();
+		model.addAttribute("allUsers", allUsers);
+		
+		return "userList";
 	}
 	
 	

@@ -67,7 +67,7 @@ public class UsersDAO implements com.project.dao.layer.UsersDAO{
 		try {
 			Session session = HibernateConnection.doHibernateConnection().openSession();
 
-			List<Users> usuarios = session.createQuery("From Usuarios where iduser='" + iduser + "'").list();
+			List<Users> usuarios =(List<Users>) session.createQuery("From Users where iduser='" + iduser + "'").list();
 
 			if (usuarios != null && usuarios.get(0) != null) {
 				session.beginTransaction();

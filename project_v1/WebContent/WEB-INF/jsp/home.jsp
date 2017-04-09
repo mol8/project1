@@ -36,6 +36,7 @@ xmlns:h="http://java.sun.com/jsf/html">
 			<ul class="nav navbar-nav">
 				<li><a href="${pageContext.request.contextPath}/calendar">Calendario</a></li>
 				<li><a href="${pageContext.request.contextPath}/userList">Lista de usuarios</a></li>
+				<li><a href="${pageContext.request.contextPath}/patientList">Lista de pacientes</a></li>
 				<li><a href="${pageContext.request.contextPath}/home">Inicio</a></li>
 			</ul>		
 			<ul class="nav navbar-nav navbar-right">
