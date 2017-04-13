@@ -1,6 +1,6 @@
 package com.project.pojo;
 // default package
-// Generated Mar 11, 2017 2:43:51 PM by Hibernate Tools 3.4.0.CR1
+// Generated Apr 13, 2017 9:41:13 PM by Hibernate Tools 3.4.0.CR1
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -35,6 +35,7 @@ public class Study implements java.io.Serializable {
 	private String requestedProcedureDescription;
 	private Date scheduledProcedureStepStartDateTime;
 	private String status;
+	private Date scheduledProcedureStepEndDateTime;
 
 	public Study() {
 	}
@@ -46,7 +47,8 @@ public class Study implements java.io.Serializable {
 
 	public Study(Patient patient, Equipment equipment, String dicomStudyInstanceUid, String referringPhysician,
 			String issuer, String requestingService, String requestedProcedureCode,
-			String requestedProcedureDescription, Date scheduledProcedureStepStartDateTime, String status) {
+			String requestedProcedureDescription, Date scheduledProcedureStepStartDateTime, String status,
+			Date scheduledProcedureStepEndDateTime) {
 		this.patient = patient;
 		this.equipment = equipment;
 		this.dicomStudyInstanceUid = dicomStudyInstanceUid;
@@ -57,6 +59,7 @@ public class Study implements java.io.Serializable {
 		this.requestedProcedureDescription = requestedProcedureDescription;
 		this.scheduledProcedureStepStartDateTime = scheduledProcedureStepStartDateTime;
 		this.status = status;
+		this.scheduledProcedureStepEndDateTime = scheduledProcedureStepEndDateTime;
 	}
 
 	@Id
@@ -163,17 +166,27 @@ public class Study implements java.io.Serializable {
 	public void setStatus(String status) {
 		this.status = status;
 	}
+
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "scheduled_procedure_step_end_date_time", length = 19)
+	public Date getScheduledProcedureStepEndDateTime() {
+		return this.scheduledProcedureStepEndDateTime;
+	}
+
+	public void setScheduledProcedureStepEndDateTime(Date scheduledProcedureStepEndDateTime) {
+		this.scheduledProcedureStepEndDateTime = scheduledProcedureStepEndDateTime;
+	}
 	
-	public String fechaString(){
+	public String fechaString(Date date){
 		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy"); 
-		String currentData = sdf.format(scheduledProcedureStepStartDateTime); 
+		String currentData = sdf.format(date); 
 		return currentData;
 	}
 	
-	public String horaString(){
+	public String horaString(Date date){
 		SimpleDateFormat sdf = new SimpleDateFormat("HH:mm"); 
-		String currentData = sdf.format(scheduledProcedureStepStartDateTime); 
+		String currentData = sdf.format(date); 
 		return currentData;
-	}
+}
 
 }

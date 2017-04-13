@@ -21,8 +21,8 @@ public class citaController {
 private static final Logger logger = Logger.getLogger(citaController.class);
 	
 
-	@RequestMapping(value = "/nuevaCita/{fecha}/{horaInicio}/{horaFin}", method = RequestMethod.GET)
-	public ModelAndView nuevaCita(@PathVariable("fecha") String fecha, @PathVariable("horaInicio") String horaInicio, @PathVariable("horaFin") String horaFin, HttpSession session){
+	@RequestMapping(value = "/nuevaCita/{inicio}/{fin}", method = RequestMethod.GET)
+	public ModelAndView nuevaCita(@PathVariable("inicio") String inicio, @PathVariable("fin") String fin, HttpSession session){
 		String username = SecurityContextHolder.getContext().getAuthentication().getName();
 		
 		logger.debug("/nuevaCita -> citaControler.nuevaCita()");
@@ -37,16 +37,17 @@ private static final Logger logger = Logger.getLogger(citaController.class);
 		String user = SecurityContextHolder.getContext().getAuthentication().getName();
 		mav.addObject("Usuario", user);
 		
-		mav.addObject("fecha", fecha);
-		mav.addObject("horaInicio", horaInicio);
-		mav.addObject("horaFin", horaFin);
+		
+		
+		mav.addObject("inicio", inicio);
+		mav.addObject("fin", fin);
 		
 		return mav;
 	}
 	
 	
-	@RequestMapping(value = "/nuevaCita_2/{fecha}/{horaInicio}/{horaFin}/{idPatient}", method = RequestMethod.GET)
-	public ModelAndView nuevaCita_2(@PathVariable("fecha") String fecha, @PathVariable("horaInicio") String horaInicio, @PathVariable("horaFin") String horaFin, @PathVariable("idPatient") String idPatient, HttpSession session){
+	@RequestMapping(value = "/nuevaCita_2/{inicio}/{fin}/{idPatient}", method = RequestMethod.GET)
+	public ModelAndView nuevaCita_2(@PathVariable("inicio") String inicio, @PathVariable("fin") String fin, @PathVariable("idPatient") String idPatient, HttpSession session){
 		String username = SecurityContextHolder.getContext().getAuthentication().getName();
 		
 		logger.debug("/nuevaCita_2 -> citaControler.nuevaCita_2()");
@@ -63,9 +64,8 @@ private static final Logger logger = Logger.getLogger(citaController.class);
 		String user = SecurityContextHolder.getContext().getAuthentication().getName();
 		mav.addObject("Usuario", user);
 		
-		mav.addObject("fecha", fecha);
-		mav.addObject("horaInicio", horaInicio);
-		mav.addObject("horaFin", horaFin);
+		mav.addObject("inicio", inicio);
+		mav.addObject("fin", fin);
 		
 		return mav;
 	}

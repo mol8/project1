@@ -19,9 +19,6 @@ public class StudyDAO implements com.project.dao.layer.StudyDAO{
 		Session session = HibernateConnection.doHibernateConnection().openSession();
 		
 		List<Study> allStudies = session.createQuery("From Study").list();
-
-		
-		
 		
 		logger.info("Numero de estudios encontrados: "+ allStudies.size());
 		for (Study study : allStudies) {
@@ -60,6 +57,31 @@ public class StudyDAO implements com.project.dao.layer.StudyDAO{
 		
 		session.close();
 		return study;
+	}
+	
+	@Override
+	public List<Study> getStudyPROGRAMADOS() {				
+		logger.info("Buscamos todos los estudios con status: PROGRAMADO");
+		
+		
+		Session session = HibernateConnection.doHibernateConnection().openSession();
+		
+		Query query = session.createQuery("from Study where status = :status");
+		query.setParameter("status", "PROGRAMADO");
+		List<Study> allStudies = query.list();
+		
+		logger.info("Numero de estudios encontrados: "+ allStudies.size());
+		for (Study study : allStudies) {
+			Hibernate.initialize(study.getPatient());
+			Hibernate.initialize(study.getPatient().getUsers());
+			Hibernate.initialize(study.getEquipment());
+			logger.info(study.getIdstudy() + " " + study.getScheduledProcedureStepStartDateTime().toLocaleString());
+			logger.info("Nombre del paciente:"+study.getPatient().getUsers().getName());
+		}		
+		
+		session.close();
+		
+		return allStudies;
 	}
 
 	@Override

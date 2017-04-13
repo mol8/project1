@@ -16,4 +16,6 @@ public interface StudyDAO {
 	
 	public boolean deleteStudy(Integer idstudy);
 
+	public List<Study> getStudyPROGRAMADOS();
+
 }

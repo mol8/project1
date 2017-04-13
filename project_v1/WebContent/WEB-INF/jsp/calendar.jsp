@@ -1,9 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+xmlns:f="http://java.sun.com/jsf/core" 
+xmlns:h="http://java.sun.com/jsf/html">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 
 <link href='${pageContext.request.contextPath}/scheduler/lib/fullcalendar.min.css' rel='stylesheet' />
 <link href='${pageContext.request.contextPath}/scheduler/lib/fullcalendar.print.min.css' rel='stylesheet' media='print' />
@@ -23,6 +31,17 @@
 	//	document ready
 
 		$('#calendar').fullCalendar({
+
+			schedulerLicenseKey: 'CC-Attribution-NonCommercial-NoDerivatives',
+			eventSources: [
+
+		        // your event source
+		        {
+		            url: '${pageContext.request.contextPath}/calendar/jsonEvents', // use the `url` property
+		            color: 'yellow',    // an option!
+		            textColor: 'black'  // an option!
+		        }
+		    ],
 			locale: initialLocaleCode,
 			editable: true, // enable draggable events
 			aspectRatio: 1.8,
@@ -84,7 +103,7 @@
 		    } */
 
 			select: function(start, end, jsEvent, view, resource) {
-				location.href = "${pageContext.request.contextPath}/nuevaCita/"+start.format()+"/12/13";
+				location.href = "${pageContext.request.contextPath}/nuevaCita/"+start.format()+"/"+end.format();
 				/* console.log(
 					'select',
 					start.format(),
@@ -108,31 +127,67 @@
 
 </script>
 
+
 <style>
+body {
+	margin: 100px auto;
+	padding: auto;
+	font-family: "Lucida Grande", Helvetica, Arial, Verdana, sans-serif;
+	font-size: 14px;
+}
 
-	body {
-		margin: 20px 10px;
-		padding: 0;
-		font-family: "Lucida Grande",Helvetica,Arial,Verdana,sans-serif;
-		font-size: 14px;
-	}
+.fc-header {
+	position: fixed;
+}
 
-	#calendar {
-		max-width: 1000px;
-		margin: 0 auto;
-	}
+.fc-first .fc-last {
+	position: fixed;
+}
 
+#calendar {
+	max-width: 1000px;
+	margin: auto auto;
+}
 </style>
 
 <title>Calendario</title>
 </head>
 <body>
+<nav id="header" class="navbar navbar-inverse navbar-fixed-top">
+	<div class="container">
+		<div class="navbar-header">
+			<a class="navbar-brand" href="#">Users app</a>
+		</div>
+		<div id="navbar" class="collapse navbar-collapse">
+			<ul class="nav navbar-nav">
+				<li class="active"><a href="${pageContext.request.contextPath}/calendar">Calendario</a></li>
+				<li><a href="${pageContext.request.contextPath}/userList">Lista
+						de usuarios</a></li>
+				<li><a href="${pageContext.request.contextPath}/patientList">Lista
+						de pacientes</a></li>
+				<li><a href="${pageContext.request.contextPath}/home">Inicio</a></li>
+			</ul>
+			<ul class="nav navbar-nav navbar-right">
+				<li><p class="navbar-text">${username}</p></li>
+				<li><a href="${pageContext.request.contextPath}/logout">Logout</a></li>
+			</ul>
+		</div>
+		<!--/.nav-collapse -->
+	</div>
+	</nav>
+	
+	<div id="body" class="section">
+	<div class="content">
+		<div id="calendar"></div>
+		</div>
+	</div>
+	
+	<footer class="footer" style="margin-top: 10px;">
+	<div class="container">
+		<p class="text-muted">&copy; 2017 Jose Antonio Molins</p>
+	</div>
+	</footer>
 
-<a href="${pageContext.request.contextPath}/logout">Logout</a>
-
-<a href="${pageContext.request.contextPath}/home">Home</a>
-
-	<div id='calendar'></div>
 
 </body>
 </html>
