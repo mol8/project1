@@ -53,7 +53,7 @@
 	<div class="container">
 		<div class="jumbotron">
 			<h1>Nueva Cita</h1>
-			<p>Selecciona paciente para generar la nueva cita en ${inicio} ${fin}</p>
+			<p>Selecciona paciente para generar la nueva cita en ${inicio} ${fin} ${resource}</p>
 		</div>
 
 		<div class="input-group"
@@ -83,7 +83,7 @@
 						<td><input type="image"
 							src="${pageContext.request.contextPath}/img/ok.jpg"
 							id="selectPatient"
-							onclick="window.location='${pageContext.request.contextPath}/nuevaCita_2/${inicio}/${fin}/${patient.getIdpatient()}';"
+							onclick="window.location='${pageContext.request.contextPath}/nuevaCita_2/${inicio}/${fin}/${resource}/${patient.getIdpatient()}';"
 							style="width: 25px; height: 25px;" /></td>
 					</tr>
 				</c:forEach>

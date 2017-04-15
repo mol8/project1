@@ -24,9 +24,34 @@
 		src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	<script src="${pageContext.request.contextPath}/js/tableFilter.js"></script>
 	<script src="${pageContext.request.contextPath}/js/sortTable.js"></script>
-<title>Seleccion de paciente - Nueva Cita</title>
+
+	<script type="text/javascript"
+		src="${pageContext.request.contextPath}/js/jquery.timepicker.js"></script>
+	<link rel="stylesheet" type="text/css"
+		href="${pageContext.request.contextPath}/css/jquery.timepicker.css" />
+
+	<script type="text/javascript"
+		src="${pageContext.request.contextPath}/js/bootstrap-datepicker.js"></script>
+	<link rel="stylesheet" type="text/css"
+		href="${pageContext.request.contextPath}/css/bootstrap-datepicker.css" />
+
+	<script type="text/javascript"
+		src="${pageContext.request.contextPath}/js/Datepair.js"></script>
+	<script type="text/javascript"
+		src="${pageContext.request.contextPath}/js/jquery.datepair.js"></script>
+	<script>
+		function defaultSelected() {
+			var aux = '${resource}';
+			document.getElementById('idequipment').value = aux;
+		}
+	</script>
+
+
+
+
+	<title>Seleccion de paciente - Nueva Cita</title>
 </head>
-<body>
+<body onload="defaultSelected();">
 
 	<nav class="navbar navbar-inverse navbar-fixed-top">
 	<div class="container">
@@ -62,26 +87,144 @@
 		<!-- <label>${message}</label><br></br> -->
 		<div>
 			<form
-				action="${pageContext.request.contextPath}/nuevaCita_2/${inicio}/${fin}/${patient.getIdpatient()}"
-				method="post" enctype="multipart/form-data"
-				onsubmit="return dovalidations()">
-
-				<section>
-				<h2>Fecha y Hora</h2>
-				<label>Inicio</label> <input id="fecha" type="text" name="fecha"
-					value="${inicio}" /> <label>Fin</label> <input id="horaInicio"
-					type="text" name="horaInicio" value="${fin}" /> </section>
+				action="${pageContext.request.contextPath}/nuevaCita_2/${inicio}/${fin}/${resource}/${patient.getIdpatient()}"
+				method="post">
 
 				<section>
 				<h2>Datos de paciente</h2>
-				<label>Nombre</label> <input id="patientName" type="text"
-					name="patientName" value="${patient.users.getName()}" /> <label>Apellidos</label>
-				<input id="patientSurename" type="text" name="patientSurename"
-					value="${patient.users.getSurename()}" /> <label>Identificador</label>
-				<input id="patientId" type="text" name="patientId"
-					value="${patient.getIdpatient()}" /> </section>
+				<div class="form-group">
+					<label class="label label-default">Nombre</label> <label>${patient.users.getName()}</label>
+					<%-- <input id="patientName" type="text"
+						name="patientName" class="form-control"
+						value="${patient.users.getName()}" /> --%>
+				</div>
+				<div class="form-group">
+					<label class="label label-default">Apellidos</label> <label>${patient.users.getSurename()}</label>
+					<%-- <input id="patientSurename" type="text"
+						name="patientSurename" class="form-control"
+						value="${patient.users.getSurename()}" /> --%>
+				</div>
+				<div class="form-group">
+					<label class="label label-default">Identificador</label> <label>${patient.getIdpatient()}</label>
+					<%-- <input id="patientId" type="text"
+						name="patientId" class="form-control"
+						value="${patient.getIdpatient()}" /> --%>
+				</div>
+				</section>
 
-				<input type="submit" value="Enviar" />
+
+				<section>
+				<h2>Modalidad y descripcion</h2>
+				<div class="form-group">
+					<label>Descripcion</label> <input id="descripcion" type="text"
+						name="descripcion" class="form-control" value="" />
+				</div>
+
+				<div class="form-group">
+					<label>Modalidad</label> <select id="idequipment"
+						name="idequipment">
+						<c:forEach items="${allEquipment}" var="equipment">
+							<option value="${equipment.getIdequipment()}">${equipment.getModality()}
+								- ${equipment.getAeTitle()}</option>
+						</c:forEach>
+					</select>
+				</div>
+
+				<div class="form-group">
+					<label>Medico Remitente</label> <select name="medicoRemitente">
+						<option>1</option>
+						<option>2</option>
+						<option>3</option>
+						<option>4</option>
+						<option>5</option>
+					</select>
+				</div>
+
+				<div class="form-group">
+					<label>Departamento</label> <select name="departamento">
+						<option>1</option>
+						<option>2</option>
+						<option>3</option>
+						<option>4</option>
+						<option>5</option>
+					</select>
+				</div>
+
+
+				<%-- <div class="form-group">
+					<table class="table" id="equipmentTable" name="idequipment">
+						<thead class="header">
+							<tr class="header">
+								<th></th>
+								<th>Modalidad</th>
+								<th>AETitle</th>
+							</tr>
+						</thead>
+						<tbody>
+							<c:forEach items="${allEquipment}" var="equipment">
+								<tr>
+									<td></tf><input id="idequipment" type="radio"
+										name="idequipment" value="${equipment.getIdequipment()}"></td>
+									<td>${equipment.getModality()}</td>
+									<td>${equipment.getAeTitle()}</td>
+
+								</tr>
+							</c:forEach>
+						</tbody>
+					</table>
+				</div> --%> </section>
+
+
+				<section>
+				<h2>Fecha y Hora</h2>
+				<%-- <label>Inicio</label> <input id="fecha" type="text" name="fecha"
+					value="${inicio}" /> <label>Fin</label> <input id="horaInicio"
+					type="text" name="horaInicio" value="${fin}" /> --%>
+				<div class="form-group">
+					<p id="datepairExample">
+
+						<label>Fecha</label> <input type="text" id="fecha" name="fecha"
+							class="date start" value="${fecha}" /> <label>Hora
+							inicio</label><input type="text" id="horaInicio" name="horaInicio"
+							class="time start" value="${horaInicio}" /> <label>Horafin</label>
+						<input type="text" id="horaFin" name="horaFin" class="time end"
+							value="${horaFin}" />
+						<!-- 					<input type="text" class="date end" /> -->
+
+					</p>
+				</div>
+
+				<script>
+					// initialize input widgets first
+					$('#datepairExample .time').timepicker({
+						'showDuration' : false,
+						'timeFormat' : 'H:i',
+						'minTime' : '9:00',
+						'maxTime' : '23:45',
+						'step' : 15,
+					});
+
+					$('#datepairExample .date').datepicker({
+						'format' : 'd-m-yyyy',
+						'changeYear' : true,
+						'changeMonth' : true,
+						'autoclose' : true
+					});
+
+					// initialize datepair
+					$('#datepairExample').datepair({
+						'defaultTimeDelta' : 900000
+					// milliseconds - 15 min
+					});
+				</script> </section>
+
+
+
+
+
+
+				<input class="btn btn-primary pull-right" type="submit"
+					value="Enviar" />
 			</form>
 		</div>
 

@@ -44,7 +44,7 @@ public class EquipmentDAO implements com.project.dao.layer.EquipmentDAO{
 		
 		Session session = HibernateConnection.doHibernateConnection().openSession();
 		
-		List<Equipment> list = session.createQuery("from Equipment where idequipment = :idequipment ").list();
+		List<Equipment> list = session.createQuery("from Equipment").list();
 		
 		logger.info("Numero de equipos encontrados: "+ list.size());
 		
