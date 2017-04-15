@@ -23,7 +23,7 @@ import com.project.pojo.Study;
 @RestController
 public class RestProviderController {
 	
-	private static final Logger logger = Logger.getLogger(StudyDAO.class);
+	private static final Logger logger = Logger.getLogger(RestProviderController.class);
 	
 	@RequestMapping(value = "/calendar/jsonEvents", method = RequestMethod.GET)
 	public String jsonEvents() throws ParseException {
@@ -34,10 +34,9 @@ public class RestProviderController {
 		// obtenemos los estudiosprogramados
 		List<Study> studiesProgramados = RegistryDAO.getStudyDAO().getStudyPROGRAMADOS();
 		
-		Calendar cal = Calendar.getInstance();
+
 		Date start;
 		Date end;
-		String endString;
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
 		JSONArray jArray = new JSONArray();
@@ -45,18 +44,14 @@ public class RestProviderController {
 			JSONObject json = new JSONObject();
 			
 			start = study.getScheduledProcedureStepStartDateTime();
-			cal.setTime(study.getScheduledProcedureStepStartDateTime()); // sets calendar time/date
-		    cal.add(Calendar.MINUTE, 30); // adds one hour
-			//end= cal.getTime();
-		    endString = dateFormat.format(cal.getTime());
-			end = dateFormat.parse(dateFormat.format(cal.getTime()));
+			end = study.getScheduledProcedureStepEndDateTime();
 			
 			json.put("title", study.getPatient().getUsers().getName());
 			logger.info("title: "+study.getPatient().getUsers().getName());
 			json.put("start", start);
 			logger.info("start: "+ start);
-			json.put("end", endString);
-			logger.info("end: "+ endString);
+			json.put("end", end);
+			logger.info("end: "+ end);
 			
 			json.put("resourceId", study.getEquipment().getModality());
 			logger.info("resourceId: "+study.getEquipment().getModality());
