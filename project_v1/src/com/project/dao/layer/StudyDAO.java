@@ -23,4 +23,10 @@ public interface StudyDAO {
 	
 	public List<Study> getStudyPatientHorario(String idpatient, Date startTime, Date endTime);
 
+	public List<Study> getStudyPatientHorarioDistinto(int idstudy, String idpatient, Date startTime,
+			Date endTime);
+
+	public List<Study> getStudyEquipoHorarioDistinto(int idstudy, int idequipment, Date startTime,
+			Date endTime);
+
 }

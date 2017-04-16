@@ -138,4 +138,27 @@ public class EquipmentDAO implements com.project.dao.layer.EquipmentDAO{
 		return equipment;
 	}
 
+	@Override
+	public Equipment getEquipmentByModality(String modality) {
+		logger.info("Buscamos el equipo con modality: "+modality);
+		
+		Equipment equipment = new Equipment();
+		
+		Session session = HibernateConnection.doHibernateConnection().openSession();
+		
+		Query query = session.createQuery("from Equipment where modality = :modality ");
+		query.setParameter("modality", modality);
+		List<Equipment> list = query.list();
+		
+		logger.info("Numero de equipos encontrados: "+ list.size());
+		
+		if(list.size()==1){
+			equipment = (Equipment) list.get(0);
+			Hibernate.initialize(equipment.getStudies());
+		}
+		
+		session.close();
+		return equipment;
+	}
+
 }

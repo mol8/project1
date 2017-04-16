@@ -200,4 +200,65 @@ public class StudyDAO implements com.project.dao.layer.StudyDAO {
 		return studies;
 	}
 
+	@Override
+	public List<Study> getStudyPatientHorarioDistinto(int idstudy, String idpatient, Date startTime,
+			Date endTime) {
+		Session session = HibernateConnection.doHibernateConnection().openSession();
+
+		Query query = session.createQuery(
+				"from Study where idpatient = :idpatient and idstudy != :idstudy and NOT( (:startTime < scheduledProcedureStepStartDateTime and :endTime <= scheduledProcedureStepStartDateTime)OR(:startTime >= scheduledProcedureStepEndDateTime and :endTime > scheduledProcedureStepEndDateTime))");
+		query.setParameter("idpatient", idpatient);
+		query.setParameter("idstudy", idstudy);
+		query.setParameter("startTime", startTime);
+		query.setParameter("endTime", endTime);
+		List<Study> studies = query.list();
+
+		logger.info("Numero de estudios encontrados: " + studies.size());
+		/*
+		 * for (Study study : allStudies) {
+		 * Hibernate.initialize(study.getPatient());
+		 * Hibernate.initialize(study.getPatient().getUsers());
+		 * Hibernate.initialize(study.getEquipment());
+		 * logger.info(study.getIdstudy() + " " +
+		 * study.getScheduledProcedureStepStartDateTime().toLocaleString());
+		 * logger.info("Nombre del paciente:"+study.getPatient().getUsers().
+		 * getName()); }
+		 */
+
+		session.close();
+
+		return studies;
+	}
+
+	@Override
+	public List<Study> getStudyEquipoHorarioDistinto(int idstudy, int idequipment, Date startTime,
+			Date endTime) {
+		logger.info("Buscamos si existen estudios programados para la misma maquina en el mismo horario");
+		Session session = HibernateConnection.doHibernateConnection().openSession();
+
+		Query query = session.createQuery(
+				"from Study where idequipment = :idequipment and idstudy != :idstudy and NOT( (:startTime < scheduledProcedureStepStartDateTime and :endTime <= scheduledProcedureStepStartDateTime)OR(:startTime >= scheduledProcedureStepEndDateTime and :endTime > scheduledProcedureStepEndDateTime))");
+		query.setParameter("idequipment", idequipment);
+		query.setParameter("idstudy", idstudy);
+		query.setParameter("startTime", startTime);
+		query.setParameter("endTime", endTime);
+		List<Study> studies = query.list();
+
+		logger.info("Numero de estudios encontrados: " + studies.size());
+		/*
+		 * for (Study study : allStudies) {
+		 * Hibernate.initialize(study.getPatient());
+		 * Hibernate.initialize(study.getPatient().getUsers());
+		 * Hibernate.initialize(study.getEquipment());
+		 * logger.info(study.getIdstudy() + " " +
+		 * study.getScheduledProcedureStepStartDateTime().toLocaleString());
+		 * logger.info("Nombre del paciente:"+study.getPatient().getUsers().
+		 * getName()); }
+		 */
+
+		session.close();
+
+		return studies;
+	}
+
 }

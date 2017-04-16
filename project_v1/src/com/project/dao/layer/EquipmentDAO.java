@@ -19,4 +19,6 @@ public interface EquipmentDAO {
 	
 	public boolean deleteEquipment(Integer idequipment);
 
+	public Equipment getEquipmentByModality(String modality);
+
 }

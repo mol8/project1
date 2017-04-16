@@ -97,6 +97,7 @@
 											    end: '18:00', // an end time (6pm in this example)
 											}, */
 
+											eventDurationEditable : false,
 											resourceLabelText : 'Salas',
 											resources : [ {
 												id : 'CR',
@@ -114,37 +115,6 @@
 												id : 'CT',
 												title : 'Escaner',
 												eventColor : 'blue'
-											} ],
-											events : [ {
-												id : '1',
-												resourceId : 'CR',
-												start : '2017-02-07T02:00:00',
-												end : '2017-02-07T07:00:00',
-												title : 'event 1'
-											}, {
-												id : '2',
-												resourceId : 'MR',
-												start : '2017-02-07T05:00:00',
-												end : '2017-02-07T22:00:00',
-												title : 'event 2'
-											}, {
-												id : '3',
-												resourceId : 'US',
-												start : '2017-02-06',
-												end : '2017-02-08',
-												title : 'event 3'
-											}, {
-												id : '4',
-												resourceId : 'CT',
-												start : '2017-02-07T03:00:00',
-												end : '2017-02-07T08:00:00',
-												title : 'event 4'
-											}, {
-												id : '5',
-												resourceId : 'MR',
-												start : '2017-02-07T00:30:00',
-												end : '2017-02-07T02:30:00',
-												title : 'event 5'
 											} ],
 
 											/* dayClick: function() {
@@ -181,18 +151,54 @@
 													dayDelta, minuteDelta,
 													allDay, revertFunc) {
 
-												alert(event.title
-														+ " was moved "
-														+ dayDelta
-														+ " days and "
-														+ minuteDelta
-														+ " minutes.");
-
-												//AJAX que modifica los datos del estudio con los nuevos datos del evento.
-
 												if (!confirm("Are you sure about this change?")) {
 													revertFunc();
+												} else {
+													//AJAX que modifica los datos del estudio con los nuevos datos del evento.												
+													$
+															.ajax({
+																url : "${pageContext.request.contextPath}/calendar/cambiaCita",
+																type : "post",
+																data : "idstudy="
+																		+ event.idstudy
+																		+ "&startTime="
+																		+ event.start
+																				.format()
+																		+ "&endTime="
+																		+ event.end
+																				.format()
+																		+ "&modality="
+																		+ event.resourceId,
+
+																success : function(
+																		response) {
+																	alert(response);
+																},
+
+																error : function(
+																		error) {
+																	alert(error);
+																}
+															});
 												}
+
+											},
+											eventClick : function(calEvent,
+													jsEvent, view) {
+
+												//accedemos a una nueva vista con los datos del estudio donde los podremos cambiar.
+												location.href = "${pageContext.request.contextPath}/modificaCita/"
+														+ calEvent.idstudy;
+												/* alert('Event: '
+														+ calEvent.title);
+												alert('Coordinates: '
+														+ jsEvent.pageX + ','
+														+ jsEvent.pageY);
+												alert('View: ' + view.name);
+
+												// change the border color just for fun
+												$(this).css('border-color',
+														'red'); */
 
 											}
 										});

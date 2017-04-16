@@ -55,6 +55,12 @@ public class RestProviderController {
 			
 			json.put("resourceId", study.getEquipment().getModality());
 			logger.info("resourceId: "+study.getEquipment().getModality());
+			
+			json.put("idequipment", study.getEquipment().getIdequipment());
+			logger.info("idequipment: "+study.getEquipment().getIdequipment());
+			
+			json.put("idstudy", study.getIdstudy());
+			logger.info("istudy: "+study.getIdstudy());
 
 			jArray.put(json);
 		}
