@@ -29,4 +29,6 @@ public interface StudyDAO {
 	public List<Study> getStudyEquipoHorarioDistinto(int idstudy, int idequipment, Date startTime,
 			Date endTime);
 
+	public Study getStudyByDicomStudyInstanceUid(String dicomStudyInstanceUid);
+
 }

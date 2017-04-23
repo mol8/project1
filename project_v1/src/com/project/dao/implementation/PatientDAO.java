@@ -16,7 +16,7 @@ public class PatientDAO implements com.project.dao.layer.PatientDAO{
 
 	@Override
 	public Patient getPatientByID(String idPatient) {
-		logger.info("Buscamos el estudio con idstudy: "+idPatient);
+		logger.info("Buscamos el estudio con idPatient: "+idPatient);
 		
 		Patient patient = new Patient();
 		
@@ -123,7 +123,7 @@ public class PatientDAO implements com.project.dao.layer.PatientDAO{
 		try {
 			Session session = HibernateConnection.doHibernateConnection().openSession();
 
-			List<Patient> patient = session.createQuery("From Study where idpatient='" + idpatient + "'").list();
+			List<Patient> patient = session.createQuery("From Patient where idpatient='" + idpatient + "'").list();
 
 			if (patient != null && patient.get(0) != null) {
 				session.beginTransaction();

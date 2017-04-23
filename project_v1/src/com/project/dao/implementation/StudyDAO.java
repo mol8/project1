@@ -59,6 +59,36 @@ public class StudyDAO implements com.project.dao.layer.StudyDAO {
 		session.close();
 		return study;
 	}
+	
+	@Override
+	public Study getStudyByDicomStudyInstanceUid(String dicomStudyInstanceUid) {
+		logger.info("Buscamos el estudio con dicomStudyInstanceUid: " + dicomStudyInstanceUid);
+
+		Study study = new Study();
+
+		Session session = HibernateConnection.doHibernateConnection().openSession();
+
+		Query query = session.createQuery("from Study where dicomStudyInstanceUid = :dicomStudyInstanceUid ");
+		query.setParameter("dicomStudyInstanceUid", dicomStudyInstanceUid);
+		List<Study> list = query.list();
+
+		logger.info("Numero de estudios encontrados: " + list.size());
+
+		if (list.size() == 1) {
+			study = (Study) list.get(0);
+			Hibernate.initialize(study.getPatient());
+			if(study.getPatient()==null){
+				//nada
+			}else{
+				Hibernate.initialize(study.getPatient().getUsers());
+			}
+				
+			Hibernate.initialize(study.getEquipment());
+		}
+
+		session.close();
+		return study;
+	}
 
 	@Override
 	public List<Study> getStudyPROGRAMADOS() {

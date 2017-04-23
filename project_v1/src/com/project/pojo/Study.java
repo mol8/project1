@@ -75,7 +75,7 @@ public class Study implements java.io.Serializable {
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "idpatient", nullable = false)
+	@JoinColumn(name = "idpatient")
 	public Patient getPatient() {
 		return this.patient;
 	}
@@ -85,7 +85,7 @@ public class Study implements java.io.Serializable {
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "idequipment", nullable = false)
+	@JoinColumn(name = "idequipment")
 	public Equipment getEquipment() {
 		return this.equipment;
 	}
