@@ -20,11 +20,17 @@ import com.project.util.sendORM;
 import ca.uhn.hl7v2.HL7Exception;
 import ca.uhn.hl7v2.llp.LLPException;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Properties;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 @Controller
@@ -40,9 +46,30 @@ public class entradaController {
 	
 	
 	@RequestMapping(value = "/entrada/{idstudy}", method= RequestMethod.GET)
-	public ModelAndView login(@PathVariable("idstudy") String idstudy, HttpSession session){
+	public ModelAndView login(@PathVariable("idstudy") String idstudy, HttpSession session) throws IOException{
 		logger.debug("/entrada/"+idstudy);		
 		logger.info("Generamos el ORM y lo enviamos a la worklist");
+
+		String path =session.getServletContext().getRealPath("/") + "//WEB-INF//resources//";
+		Properties prop = new Properties();
+    	InputStream input = null;
+
+		input = new FileInputStream(path + File.separator +"config.properties");
+
+		// load a properties file
+		prop.load(input);
+
+		// get the property value and print it out
+		logger.info(prop.getProperty("incomingPort"));
+		logger.info(prop.getProperty("useTLS"));
+		logger.info(prop.getProperty("outgoingPort"));
+		logger.info(prop.getProperty("sendingIP"));
+		
+		
+		int incomingPort=Integer.parseInt(prop.getProperty("incomingPort"));
+		boolean useTLS=Boolean.parseBoolean(prop.getProperty("useTLS"));
+		int outgoingPort=Integer.parseInt(prop.getProperty("outgoingPort"));
+		String sendingIP=prop.getProperty("sendingIP");
 		
 		//obtenemos los datos del paciente y estudio seleccionados idstudy
 		Study study = RegistryDAO.getStudyDAO().getStudyByID(Integer.parseInt(idstudy));
@@ -98,25 +125,15 @@ public class entradaController {
 		generate_ORM.setOBR19_placerFiel2(equipment.getModality());
 		generate_ORM.setOBR24_diagnosticServSectID(equipment.getIdequipment().toString());
 		
-		sendORM send_ORM = new sendORM(3010,false,2575,"192.168.1.40");
 		try {
-			send_ORM.send(generate_ORM.orm());
-		} catch (HL7Exception | LLPException | IOException | ParseException e) {
+			//leemos los datos de configuracion de envio del fichero de configuracion
+			sendORM send_ORM = new sendORM(incomingPort,useTLS,outgoingPort,sendingIP,generate_ORM.orm());
+			send_ORM.start();
+		} catch (HL7Exception | IOException | ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			logger.error(e.getMessage());
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			logger.error(e.getMessage());
 		}
-		
-		
-		
-		
-		
-		
-		
-		
 		
 		//cambiamos el estado delestudio a ENTRADA
 		study.setStatus(Estado.ENTRADA.toString());
@@ -132,12 +149,12 @@ public class entradaController {
 		
 		//obtenemos un listado de todos los estudios citados
 		logger.info("Mostramos listado de estudios citados.");
-		List<Study> allStudies = RegistryDAO.getStudyDAO().getAllStudies();
-		logger.info("Estudios encontrados: " + allStudies.size());
-		for (Study study_aux : allStudies) {
+		List<Study> todayStudies = RegistryDAO.getStudyDAO().getTodayStudies();
+		logger.info("Estudios encontrados: " + todayStudies.size());
+		for (Study study_aux : todayStudies) {
 			logger.info(study_aux.getIdstudy() + " " + study_aux.getPatient().getIdpatient());
 		}
-		mav.addObject("allStudies",allStudies);
+		mav.addObject("todayStudies",todayStudies);
 		
 		return mav;
 	}

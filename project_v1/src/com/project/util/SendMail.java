@@ -28,7 +28,7 @@ public class SendMail extends Thread{
 	private String mensage;
 	
 	public SendMail(String emailDestino, String mensage, HttpServletRequest request){
-		this.path =request.getSession().getServletContext().getRealPath("/") + "//WEB-INF//resources//";;
+		this.path =request.getSession().getServletContext().getRealPath("/") + "//WEB-INF//resources//";
 		this.emailDestino = emailDestino;
 		this.mensage = mensage;
 		

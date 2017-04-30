@@ -24,6 +24,32 @@
 		src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	<script src="${pageContext.request.contextPath}/js/tableFilter.js"></script>
 	<script src="${pageContext.request.contextPath}/js/sortTable.js"></script>
+	
+	<script src="http://code.jquery.com/jquery-latest.min.js"
+        type="text/javascript"></script>
+	
+	<script type="text/javascript">
+		function cancelStudy(id){
+			idstudy=id.split("_")[1];
+
+			$.ajax({
+				url:"${pageContext.request.contextPath}/cancelar",
+				type: "post",
+				data: "idstudy="+idstudy,
+
+				success: function(response){
+					var table = document.getElementById("myTable");
+					var tr = document.getElementById("row_"+idstudy);
+					table.deleteRow(tr.rowIndex);
+					alert(response);
+				},
+
+				error: function(error){
+					alert(error);
+				}
+			});
+		}
+	</script>
 
 	<title>Home</title>
 </head>
@@ -79,24 +105,62 @@
 				</tr>
 			</thead>
 			<tbody>
-				<c:forEach items="${allStudies}" var="study">
-					<tr>
-					<td>${study.patient.users.name}</td>
+				<c:forEach items="${todayStudies}" var="study">
+					<c:choose>
+						<c:when test="${study.status=='ENTRADA'}">
+							<tr id="row_${study.idstudy}" bgcolor="#FFFFCC">
+						</c:when>
+						<c:when test="${study.status=='FINALIZADO'}">
+							<tr id="row_${study.idstudy}" bgcolor="#E5FFCC">
+						</c:when>
+						<c:when test="${study.status=='PROGRAMADO'}">
+							<tr id="row_${study.idstudy}">
+						</c:when>
+					</c:choose>
+						<td>${study.patient.users.name}</td>
 						<td>${study.fechaString(study.getScheduledProcedureStepStartDateTime())}</td>
 						<td>${study.horaString(study.getScheduledProcedureStepStartDateTime())}</td>
 						<td>${study.requestedProcedureDescription}</td>
 						<td>${study.equipment.modality}</td>
 						<td>${study.status}</td>
-						<!-- Boton para dar entrada al estudio en la worklist -->
-
-						<td><input type="image"
+						
+						<c:choose>
+						<c:when test="${study.status=='ENTRADA'}">
+							<td><img
+							src="${pageContext.request.contextPath}/img/xray.jpg"
+							style="width: 25px; height: 25px;" /></td>
+							<td></td>
+							<td></td>
+						</c:when>
+						<c:when test="${study.status=='FINALIZADO'}">
+							<td><input type="image"
+							src="${pageContext.request.contextPath}/img/ver.png"
+							style="width: 25px; height: 25px;" /></td>
+							<td></td>
+							<td></td>
+						</c:when>
+						<c:when test="${study.status=='PROGRAMADO'}">
+							<td><input type="image"
 							src="${pageContext.request.contextPath}/img/waitingroom.jpg"
 							id="saveForm"
 							onclick="window.location='${pageContext.request.contextPath}/entrada/${study.idstudy}';"
-							style="width: 25px; height: 25px;" /> <input type="button"
-							value="Entrada" id="btnEntrada"
-							onclick="window.location='${pageContext.request.contextPath}/entrada/${study.idstudy}';"></input>
-						</td>
+							style="width: 25px; height: 25px;" /></td>
+
+							<td><input type="image"
+							src="${pageContext.request.contextPath}/img/calendario.jpg"
+							id="saveForm"
+							onclick="window.location='${pageContext.request.contextPath}/modificaCita/${study.idstudy}';"
+							style="width: 25px; height: 25px;" /></td>
+
+							<td><input type="image"
+							src="${pageContext.request.contextPath}/img/cancelar.jpg"
+							id="btn_${study.idstudy}"
+							onclick="cancelStudy(this.id)"
+							style="width: 25px; height: 25px;" /></td>
+						</c:when>
+					</c:choose>
+
+						
 					</tr>
 				</c:forEach>
 			</tbody>

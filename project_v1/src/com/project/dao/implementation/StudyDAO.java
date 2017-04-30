@@ -1,5 +1,7 @@
 package com.project.dao.implementation;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -33,6 +35,49 @@ public class StudyDAO implements com.project.dao.layer.StudyDAO {
 		session.close();
 
 		return allStudies;
+	}
+	
+	@Override
+	public List<Study> getTodayStudies() {
+		logger.info("Iniciamos getTodayStudies()");
+		Session session = HibernateConnection.doHibernateConnection().openSession();
+		
+		//Obtenemos la fecha del dia de hoy
+		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+		Date inicioHoy = new Date();
+		inicioHoy.setHours(0);
+		inicioHoy.setMinutes(0);
+		inicioHoy.setSeconds(0);
+		
+		Date finHoy = new Date();
+		finHoy.setHours(23);
+		finHoy.setMinutes(59);
+		finHoy.setSeconds(59);
+		
+		String inicioHoyString = dateFormat.format(inicioHoy);
+		String finHoyString = dateFormat.format(finHoy);
+		
+		logger.info("Hora inicio hoy: "+inicioHoyString);
+		logger.info("Hora fin hoy: "+finHoyString);
+
+		Query query = session.createQuery("From Study where scheduledProcedureStepStartDateTime >= :inicioHoy AND scheduledProcedureStepEndDateTime <= :finHoy AND status <> 'CANCELADO'");
+		query.setParameter("inicioHoy", inicioHoy);
+		query.setParameter("finHoy", finHoy);
+		
+		List<Study> todayStudies = query.list();
+		
+		logger.info("Numero de estudios encontrados: " + todayStudies.size());
+		for (Study study : todayStudies) {
+			Hibernate.initialize(study.getPatient());
+			Hibernate.initialize(study.getPatient().getUsers());
+			Hibernate.initialize(study.getEquipment());
+			logger.info(study.getIdstudy() + " " + study.getScheduledProcedureStepStartDateTime().toLocaleString());
+			logger.info("Nombre del paciente:" + study.getPatient().getUsers().getName());
+		}
+
+		session.close();
+
+		return todayStudies;
 	}
 
 	@Override

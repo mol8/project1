@@ -352,5 +352,23 @@ public class citaController {
 
 		return mav;
 	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/cancelar", method = RequestMethod.POST)
+	public String cancelaCita(HttpSession session, HttpServletRequest request) {
+
+		String idstudy = request.getParameter("idstudy");
+		
+		// recuperamos el estudio de la BBDD.
+		Study estudio = RegistryDAO.getStudyDAO().getStudyByID(Integer.parseInt(idstudy));
+		
+		//cambiamos el status de la cita a CANCELADO
+		estudio.setStatus("CANCELADO");
+		
+		//actualizamos el estudio en la BBDD
+		RegistryDAO.getStudyDAO().modificaStudy(estudio);
+
+		return "Estudio cancelado";
+	}
 
 }

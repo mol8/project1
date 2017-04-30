@@ -37,14 +37,14 @@ public class loginController {
 		
 		mav.addObject("username",username);
 		
-		//obtenemos un listado de todos los estudios citados
-		logger.info("Mostramos listado de estudios citados.");
-		List<Study> allStudies = RegistryDAO.getStudyDAO().getAllStudies();
-		logger.info("Estudios encontrados: " + allStudies.size());
-		for (Study study : allStudies) {
+		//obtenemos un listado de los estudios programados para el dia de hoy
+		logger.info("Mostramos listado de estudios programados.");
+		List<Study> todayStudies = RegistryDAO.getStudyDAO().getTodayStudies();
+		logger.info("Estudios encontrados: " + todayStudies.size());
+		for (Study study : todayStudies) {
 			logger.info(study.getIdstudy() + " " + study.getPatient().getIdpatient());
 		}
-		mav.addObject("allStudies",allStudies);
+		mav.addObject("todayStudies",todayStudies);
 		
 		return mav;
 	}
