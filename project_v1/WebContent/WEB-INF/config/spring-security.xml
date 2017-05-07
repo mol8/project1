@@ -14,6 +14,7 @@
 		<security:intercept-url pattern="/nuevaCita_2/*/*" access="permitAll"/>
 		<security:intercept-url pattern="/nuevaCita_2/*/*/*" access="permitAll"/>
 		<security:intercept-url pattern="/nuevaCita_2/*/*/*/*" access="permitAll"/>
+		<security:intercept-url pattern="/hl7list" access="permitAll"/>
 		<security:intercept-url pattern="/login" access="permitAll"/>
 		<security:intercept-url pattern="/doLogin" access="permitAll"/>
 		<security:intercept-url pattern="/logout" access="permitAll"/>
