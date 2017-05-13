@@ -34,6 +34,13 @@ public class SendMail extends Thread{
 		
 	}
 	
+	public SendMail(String emailDestino, String mensage, String path){
+		this.path =path + "//WEB-INF//resources//";
+		this.emailDestino = emailDestino;
+		this.mensage = mensage;
+		
+	}
+	
 	public void run(){
 		Properties propsEmail = new Properties();
 		 

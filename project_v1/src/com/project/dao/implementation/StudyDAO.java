@@ -336,4 +336,30 @@ public class StudyDAO implements com.project.dao.layer.StudyDAO {
 		return studies;
 	}
 
+	@Override
+	public boolean existsStudyByUID(String dicomStudyInstanceUid) {
+		
+		logger.info("Buscamos el estudio con dicomStudyInstanceUid: " + dicomStudyInstanceUid);
+
+		Study study = new Study();
+
+		Session session = HibernateConnection.doHibernateConnection().openSession();
+
+		Query query = session.createQuery("from Study where dicomStudyInstanceUid = :dicomStudyInstanceUid ");
+		query.setParameter("dicomStudyInstanceUid", dicomStudyInstanceUid);
+		List<Study> list = query.list();
+
+		logger.info("Numero de estudios encontrados: " + list.size());
+
+		session.close();
+		
+		if (list.size() == 1) {
+			return true;
+		}
+
+		
+
+		return false;
+	}
+
 }

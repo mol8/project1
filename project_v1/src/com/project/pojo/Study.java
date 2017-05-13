@@ -1,6 +1,6 @@
 package com.project.pojo;
 // default package
-// Generated Apr 13, 2017 9:41:13 PM by Hibernate Tools 3.4.0.CR1
+// Generated May 13, 2017 9:11:47 PM by Hibernate Tools 3.4.0.CR1
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -36,10 +36,11 @@ public class Study implements java.io.Serializable {
 	private Date scheduledProcedureStepStartDateTime;
 	private String status;
 	private Date scheduledProcedureStepEndDateTime;
+	private String url;
 
 	public Study() {
 	}
-
+	
 	public Study(Patient patient, Equipment equipment) {
 		this.patient = patient;
 		this.equipment = equipment;
@@ -48,7 +49,7 @@ public class Study implements java.io.Serializable {
 	public Study(Patient patient, Equipment equipment, String dicomStudyInstanceUid, String referringPhysician,
 			String issuer, String requestingService, String requestedProcedureCode,
 			String requestedProcedureDescription, Date scheduledProcedureStepStartDateTime, String status,
-			Date scheduledProcedureStepEndDateTime) {
+			Date scheduledProcedureStepEndDateTime, String url) {
 		this.patient = patient;
 		this.equipment = equipment;
 		this.dicomStudyInstanceUid = dicomStudyInstanceUid;
@@ -60,6 +61,7 @@ public class Study implements java.io.Serializable {
 		this.scheduledProcedureStepStartDateTime = scheduledProcedureStepStartDateTime;
 		this.status = status;
 		this.scheduledProcedureStepEndDateTime = scheduledProcedureStepEndDateTime;
+		this.url = url;
 	}
 
 	@Id
@@ -94,7 +96,7 @@ public class Study implements java.io.Serializable {
 		this.equipment = equipment;
 	}
 
-	@Column(name = "dicom_study_instance_uid", unique = true, length = 50)
+	@Column(name = "dicom_study_instance_uid", unique = true, length = 100)
 	public String getDicomStudyInstanceUid() {
 		return this.dicomStudyInstanceUid;
 	}
@@ -176,6 +178,15 @@ public class Study implements java.io.Serializable {
 	public void setScheduledProcedureStepEndDateTime(Date scheduledProcedureStepEndDateTime) {
 		this.scheduledProcedureStepEndDateTime = scheduledProcedureStepEndDateTime;
 	}
+
+	@Column(name = "url", length = 100)
+	public String getUrl() {
+		return this.url;
+	}
+
+	public void setUrl(String url) {
+		this.url = url;
+	}
 	
 	public String fechaString(Date date){
 		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy"); 
@@ -186,7 +197,7 @@ public class Study implements java.io.Serializable {
 	public String horaString(Date date){
 		SimpleDateFormat sdf = new SimpleDateFormat("HH:mm"); 
 		String currentData = sdf.format(date); 
-		return currentData;
-}
+	return currentData;
+	}
 
 }
