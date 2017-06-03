@@ -14,6 +14,7 @@ import com.project.pojo.Equipment;
 import com.project.pojo.Patient;
 import com.project.pojo.Study;
 import com.project.pojo.Users;
+import com.project.util.PasswordGenerator;
 import com.project.util.generateORM;
 import com.project.util.sendORM;
 
@@ -112,7 +113,9 @@ public class entradaController {
 		generate_ORM.setORC_namespaceID(study.getIssuer());
 		generate_ORM.setORC_universalID(study.getDicomStudyInstanceUid());
 		
-		generate_ORM.setOBR2_placeOrderNumber_entityIdentifier(study.getIssuer());
+		//Accession Number
+		String accessionNumber = PasswordGenerator.getPassword(8);
+		generate_ORM.setOBR2_placeOrderNumber_entityIdentifier(accessionNumber);
 		generate_ORM.setOBR2_placeOrderNumber_namespaceID(study.getDicomStudyInstanceUid());
 		generate_ORM.setOBR2_placeOrderNumber_universalID(study.getIssuer());
 		
@@ -123,7 +126,7 @@ public class entradaController {
 		
 		generate_ORM.setOBR18_placerField1(equipment.getAeTitle());
 		generate_ORM.setOBR19_placerFiel2(equipment.getModality());
-		generate_ORM.setOBR24_diagnosticServSectID(equipment.getIdequipment().toString());
+		generate_ORM.setOBR24_diagnosticServSectID(equipment.getModality());
 		
 		try {
 			//leemos los datos de configuracion de envio del fichero de configuracion

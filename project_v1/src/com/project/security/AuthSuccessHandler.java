@@ -16,10 +16,13 @@ public class AuthSuccessHandler extends SavedRequestAwareAuthenticationSuccessHa
 
         String targetUrl = "";
         if(role.contains("ROLE_USUARIO")) {
-            targetUrl = "/home";
+            targetUrl = "/homepatient";
         } else if(role.contains("ROLE_ADMINISTRADOR")) {
-            targetUrl = "/admin";
+            targetUrl = "/home";
+        } else if (role.contains("ROLE_CLINICO")){
+        	targetUrl = "/home";
         }
+        	
         return targetUrl;
     }
 }

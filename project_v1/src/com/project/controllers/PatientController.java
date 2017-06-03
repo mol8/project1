@@ -18,6 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.project.dao.registry.RegistryDAO;
 import com.project.pojo.Patient;
+import com.project.pojo.Study;
 import com.project.pojo.Users;
 import com.project.util.PasswordGenerator;
 import com.project.util.SendMail;
@@ -228,6 +229,23 @@ public class PatientController {
 		mav.addObject("allPatients", allPatients);
 
 		mav.addObject("message", message);
+		return mav;
+	}
+	
+	@RequestMapping(value = "/patient/viewStudies/{idpatient}", method = RequestMethod.GET)
+	public ModelAndView viewStudies(@PathVariable("idpatient") String idpatient,HttpSession session,HttpServletRequest request) {
+		logger.debug("/patient/viewStudies/{idpatient} -> PatientController.viewStudies()");
+		logger.info("Ver estudios de paciente.");	
+		
+		String username = SecurityContextHolder.getContext().getAuthentication().getName();
+		ModelAndView mav = new ModelAndView("viewStudies");
+		
+		mav.addObject("username",username);
+		
+		//obtenemos estudios finalizados del paciente
+		List<Study> studyList = RegistryDAO.getStudyDAO().getEndStudiesByidPatient(idpatient);
+		mav.addObject("studyList",studyList);
+
 		return mav;
 	}
 

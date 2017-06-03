@@ -5,22 +5,35 @@
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
 	<security:http>
-		<security:intercept-url pattern="/calendar" access="permitAll"/>
-		<security:intercept-url pattern="/nuevaCita" access="permitAll"/>
-		<security:intercept-url pattern="/nuevaCita/*" access="permitAll"/>
-		<security:intercept-url pattern="/nuevaCita/*/*" access="permitAll"/>
-		<security:intercept-url pattern="/nuevaCita/*/*/*" access="permitAll"/>
-		<security:intercept-url pattern="/nuevaCita_2/*" access="permitAll"/>
-		<security:intercept-url pattern="/nuevaCita_2/*/*" access="permitAll"/>
-		<security:intercept-url pattern="/nuevaCita_2/*/*/*" access="permitAll"/>
-		<security:intercept-url pattern="/nuevaCita_2/*/*/*/*" access="permitAll"/>
+		<security:intercept-url pattern="/calendar" access="hasAnyRole('ROLE_CLINICO','ROLE_ADMINISTRADOR')"/>
+		<security:intercept-url pattern="/nuevaCita" access="hasAnyRole('ROLE_CLINICO','ROLE_ADMINISTRADOR')"/>
+		<security:intercept-url pattern="/nuevaCita/*" access="hasAnyRole('ROLE_CLINICO','ROLE_ADMINISTRADOR')"/>
+		<security:intercept-url pattern="/nuevaCita_2" access="hasAnyRole('ROLE_CLINICO','ROLE_ADMINISTRADOR')"/>
+		<security:intercept-url pattern="/nuevaCita_2/*" access="hasAnyRole('ROLE_CLINICO','ROLE_ADMINISTRADOR')"/>
+		<security:intercept-url pattern="/newPatient" access="hasRole('ROLE_ADMINISTRADOR')"/>
+		<security:intercept-url pattern="/newPatient/*" access="hasRole('ROLE_ADMINISTRADOR')"/>
+		<security:intercept-url pattern="/nuevoUsuario" access="hasRole('ROLE_ADMINISTRADOR')"/>
+		<security:intercept-url pattern="/nuevoUsuario/*" access="hasRole('ROLE_ADMINISTRADOR')"/>
+		<security:intercept-url pattern="/patientList" access="hasAnyRole('ROLE_CLINICO','ROLE_ADMINISTRADOR')"/>
+		<security:intercept-url pattern="/patientList/*" access="hasAnyRole('ROLE_CLINICO','ROLE_ADMINISTRADOR')"/>
+		<security:intercept-url pattern="/updatePatient" access="hasRole('ROLE_ADMINISTRADOR')"/>
+		<security:intercept-url pattern="/updatePatient/*" access="hasRole('ROLE_ADMINISTRADOR')"/>
+		<security:intercept-url pattern="/updateStudy" access="hasAnyRole('ROLE_CLINICO','ROLE_ADMINISTRADOR')"/>
+		<security:intercept-url pattern="/updateStudy/*" access="hasAnyRole('ROLE_CLINICO','ROLE_ADMINISTRADOR')"/>
+		<security:intercept-url pattern="/userList" access="hasAnyRole('ROLE_CLINICO','ROLE_ADMINISTRADOR')"/>
+		<security:intercept-url pattern="/userList/*" access="hasAnyRole('ROLE_CLINICO','ROLE_ADMINISTRADOR')"/>
+		<security:intercept-url pattern="/userUpdate" access="hasRole('ROLE_ADMINISTRADOR')"/>
+		<security:intercept-url pattern="/userUpdate/*" access="hasRole('ROLE_ADMINISTRADOR')"/>
+		<security:intercept-url pattern="/users/update/*" access="hasRole('ROLE_ADMINISTRADOR')"/>
+		<security:intercept-url pattern="/users/delete/*" access="hasRole('ROLE_ADMINISTRADOR')"/>
+		<security:intercept-url pattern="/patient/update/*" access="hasRole('ROLE_ADMINISTRADOR')"/>
 		<security:intercept-url pattern="/hl7list" access="permitAll"/>
+		<security:intercept-url pattern="/homepatient" access="hasRole('ROLE_USUARIO')"/>
+		<security:intercept-url pattern="/home" access="hasAnyRole('ROLE_CLINICO','ROLE_ADMINISTRADOR')"/>
+		<security:intercept-url pattern="/entrada/*" access="hasAnyRole('ROLE_CLINICO','ROLE_ADMINISTRADOR')"/>
 		<security:intercept-url pattern="/login" access="permitAll"/>
 		<security:intercept-url pattern="/doLogin" access="permitAll"/>
 		<security:intercept-url pattern="/logout" access="permitAll"/>
-		<security:intercept-url pattern="/home" access="hasRole('ROLE_USUARIO')"/>
-		<security:intercept-url pattern="/entrada/*" access="hasRole('ROLE_USUARIO')"/>
-		<security:intercept-url pattern="/doLogin" access="permitAll"/>
 		<security:intercept-url pattern="/login?error=true" access="permitAll"/>
 		<security:form-login login-page="/login" login-processing-url="/doLogin" authentication-success-handler-ref="authSuccessHandler"
 		authentication-failure-url="/login?error=true" username-parameter="usuario" password-parameter="password"/>

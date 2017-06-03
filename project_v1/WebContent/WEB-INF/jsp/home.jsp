@@ -58,7 +58,7 @@
 	<nav class="navbar navbar-inverse navbar-fixed-top">
 	<div class="container">
 		<div class="navbar-header">
-			<a class="navbar-brand" href="#">Users app</a>
+			<a class="navbar-brand" href="${pageContext.request.contextPath}/home">INICIO</a>
 		</div>
 		<div id="navbar" class="collapse navbar-collapse">
 			<ul class="nav navbar-nav">
@@ -67,8 +67,6 @@
 						de usuarios</a></li>
 				<li><a href="${pageContext.request.contextPath}/patientList">Lista
 						de pacientes</a></li>
-				<li class="active"><a
-					href="${pageContext.request.contextPath}/home">Inicio</a></li>
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
 				<li><p class="navbar-text">${username}</p></li>
@@ -129,30 +127,24 @@
 							<td><img
 							src="${pageContext.request.contextPath}/img/xray.jpg"
 							style="width: 25px; height: 25px;" /></td>
-							<td></td>
-							<td></td>
 						</c:when>
 						<c:when test="${study.status=='FINALIZADO'}">
 							<td><input type="image"
 							src="${pageContext.request.contextPath}/img/ver.png"
 							style="width: 25px; height: 25px;" /></td>
-							<td></td>
-							<td></td>
 						</c:when>
 						<c:when test="${study.status=='PROGRAMADO'}">
 							<td><input type="image"
 							src="${pageContext.request.contextPath}/img/waitingroom.jpg"
 							id="saveForm"
 							onclick="window.location='${pageContext.request.contextPath}/entrada/${study.idstudy}';"
-							style="width: 25px; height: 25px;" /></td>
-
-							<td><input type="image"
+							style="width: 25px; height: 25px;" />
+							<input type="image"
 							src="${pageContext.request.contextPath}/img/calendario.jpg"
 							id="saveForm"
 							onclick="window.location='${pageContext.request.contextPath}/modificaCita/${study.idstudy}';"
-							style="width: 25px; height: 25px;" /></td>
-
-							<td><input type="image"
+							style="width: 25px; height: 25px;" />
+							<input type="image"
 							src="${pageContext.request.contextPath}/img/cancelar.jpg"
 							id="btn_${study.idstudy}"
 							onclick="cancelStudy(this.id)"

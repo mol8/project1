@@ -2,12 +2,19 @@ package com.project.controllers;
 
 import java.io.IOException;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.context.ServletContextAware;
 
 import com.project.dao.registry.RegistryDAO;
 import com.project.pojo.Patient;
@@ -46,6 +53,8 @@ public class HL7OverHttpController extends HohRawServlet{
 	public HL7OverHttpController(){
 		logger.info("Iniciamos HL7OverHttp");
 		 //path= getServletContext().getRealPath("/");
+		//ServletContext servletContext = this.getServletContext();
+		//String path = servletContext.getRealPath("/");
 		/*
 		 * The servlet must be provided an implementation
 		 * of IMessageHandler<String>, such as the one which
@@ -57,22 +66,23 @@ public class HL7OverHttpController extends HohRawServlet{
 		 * Optionally, if we want to verify HTTP authentication,
 		 * we can specify an authorization callback
 		 */
-		IAuthorizationServerCallback callback = new SingleCredentialServerCallback("test", "test");
-		setAuthorizationCallback(callback);
+		//IAuthorizationServerCallback callback = new SingleCredentialServerCallback("test", "test");
+		//setAuthorizationCallback(callback);
 	}
 	
 	/*
 	 * IMessageHandler defines the interface for the class which receives 
 	 * and processes messages which come in
 	 */
+	
 	private static class MessageHandler implements IMessageHandler<String>{
+		
 
 		@Override
 		public IResponseSendable<String> messageReceived(IReceivable<String> theReceived) throws MessageProcessingException {
 			
 			String response="response";
 			
-			//generamos ACK
 			ACK ack = new ACK();
 			try {
 				ack.initQuickstart("ACK", null, null);
@@ -151,22 +161,27 @@ public class HL7OverHttpController extends HohRawServlet{
 				String email = user.getEmail();
 				
 				String mensage = "Estimado "+user.getName()+" "+user.getSurename()+","
-						+ "/n"
+						+ "\n"
 						+"En el siguiente enlace podra acceder a los resultados de su prueba diagnostica, del dia: "+study.fechaString(study.getScheduledProcedureStepStartDateTime())
-						+ "/n"
+						+ "\n"
 						+study.getUrl()
-						+ "/n"
-						+ "/n";
+						+ "\n"
+						+ "\n";
 				
-				//SendMail sendMail = new SendMail(email, mensage, path);
+				SendMail sendMail = new SendMail(email, mensage);
+				sendMail.run();
 				
 				//ACK AA - correcto
 				try {
 					ack.getMSA().getMsa1_AcknowledgementCode().setValue("AA");
 					ack.getMSH().getMessageControlID().setValue(controlID);
 					ack.getMSA().getMsa2_MessageControlID().setValue(controlID);
+					response = ack.encode();
 					
 				} catch (DataTypeException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (HL7Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
@@ -178,12 +193,18 @@ public class HL7OverHttpController extends HohRawServlet{
 					ack.getMSH().getMessageControlID().setValue(controlID);
 					ack.getMSA().getMsa2_MessageControlID().setValue(controlID);
 					ack.getMSA().getMsa3_TextMessage().setValue("UID not find in Data Base");
+					response = ack.encode();
 					
 				} catch (DataTypeException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
+				} catch (HL7Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
 				}
 			}
+			
+			logger.info(response);
 			return new RawSendable(response);
 		}
 		

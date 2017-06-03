@@ -42,14 +42,13 @@ xmlns:h="http://java.sun.com/jsf/html">
 	<nav class="navbar navbar-inverse navbar-fixed-top">
 	<div class="container">
 		<div class="navbar-header">
-			<a class="navbar-brand" href="#">Users app</a>
+			<a class="navbar-brand" href="${pageContext.request.contextPath}/home">INICIO</a>
 		</div>
 		<div id="navbar" class="collapse navbar-collapse">
 			<ul class="nav navbar-nav">
 				<li><a href="${pageContext.request.contextPath}/calendar">Calendario</a></li>
 				<li><a href="${pageContext.request.contextPath}/userList">Lista de usuarios</a></li>
 				<li class="active"><a href="${pageContext.request.contextPath}/patientList">Lista de pacientes</a></li>
-				<li><a href="${pageContext.request.contextPath}/home">Inicio</a></li>
 			</ul>		
 			<ul class="nav navbar-nav navbar-right">
 				<li><p class="navbar-text">${username}</p></li>
@@ -96,8 +95,7 @@ xmlns:h="http://java.sun.com/jsf/html">
 						<td>${patient.getDateOfBirth()}</td>
 						<td>${patient.getSex()}</td>
 						<td>
-							<a class="btn btn-sm btn-success" href="${pageContext.request.contextPath}/patient/update/${patient.getIdpatient()}" title="Update">update</a> 
-							<a class="btn btn-sm btn-success" href="${pageContext.request.contextPath}/patient/viewUser/${patient.getUsers().getIduser()}" title="viewUser">Ver Usuario</a>
+							<a class="btn btn-sm btn-success" href="${pageContext.request.contextPath}/patient/update/${patient.getIdpatient()}" title="Update">update</a> 					
 							<a class="btn btn-sm btn-success" href="${pageContext.request.contextPath}/patient/viewStudies/${patient.getIdpatient()}" title="ViewStudies">Ver Estudios</a>
 						</td>
 					</tr>
