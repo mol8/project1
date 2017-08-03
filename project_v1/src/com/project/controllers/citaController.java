@@ -40,7 +40,7 @@ public class citaController {
 
 		mav.addObject("username", username);
 
-		List<Patient> allPatient = RegistryDAO.getPatientDAO().getAllPatients();
+		List<Patient> allPatient = RegistryDAO.getPatientDAO().getAllPatients_ACTIVOS();
 		mav.addObject("allPatient", allPatient);
 
 		String user = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -251,7 +251,7 @@ public class citaController {
 
 		// obtenemos el estudio a modificar
 		Study estudio = RegistryDAO.getStudyDAO().getStudyByID(Integer.parseInt(idstudy));
-		List<Patient> allPatient = RegistryDAO.getPatientDAO().getAllPatients();
+		List<Patient> allPatient = RegistryDAO.getPatientDAO().getAllPatients_ACTIVOS();
 		List<Equipment> allEquipment = RegistryDAO.getEquipmentDAO().getAllEquipments();
 
 		String fecha = TimeUtil.fechaString(estudio.getScheduledProcedureStepStartDateTime());

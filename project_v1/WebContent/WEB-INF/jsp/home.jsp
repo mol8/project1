@@ -126,7 +126,13 @@
 						<c:when test="${study.status=='ENTRADA'}">
 							<td><img
 							src="${pageContext.request.contextPath}/img/xray.jpg"
-							style="width: 25px; height: 25px;" /></td>
+							style="width: 25px; height: 25px;" />
+							<input type="image"
+							src="${pageContext.request.contextPath}/img/cancelar.jpg"
+							id="saveForm"
+							onclick="window.location='${pageContext.request.contextPath}/cancel/${study.idstudy}';"
+							style="width: 25px; height: 25px;" />
+							</td>
 						</c:when>
 						<c:when test="${study.status=='FINALIZADO'}">
 							<td><input type="image"

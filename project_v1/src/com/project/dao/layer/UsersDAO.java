@@ -12,6 +12,8 @@ public interface UsersDAO {
 	
 	public List<Users> getAllUsers();
 	
+	public List<Users> getAllUsers_ACTIVOS();
+	
 	public boolean deleteUser(Integer iduser);
 	
 	public boolean updateUser(Users user);

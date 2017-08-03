@@ -17,6 +17,8 @@ public interface PatientDAO {
 	public boolean addPatient (Patient patient);
 	
 	public boolean deletePatient(String idpatient);
+	
+	public List<Patient> getAllPatients_ACTIVOS();
 
 
 }

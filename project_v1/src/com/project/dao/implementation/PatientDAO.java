@@ -138,4 +138,25 @@ public class PatientDAO implements com.project.dao.layer.PatientDAO{
 		}
 	}
 
+	@Override
+	public List<Patient> getAllPatients_ACTIVOS() {
+		logger.info("Iniciamos getAllStudies()");
+		Session session = HibernateConnection.doHibernateConnection().openSession();
+		
+		Query query = session.createQuery("from Patient where users.role != :role");
+		query.setParameter("role", "NO_ACTIVO");
+		List<Patient> list = query.list();
+
+		logger.info("Numero de pacientes encontrados: "+ list.size());
+		for (Patient patient : list) {
+			Hibernate.initialize(patient.getUsers());
+			Hibernate.initialize(patient.getStudies());
+			logger.info("Nombre del paciente:"+patient.getUsers().getName() + " " + patient.getUsers().getSurename());
+		}		
+		
+		session.close();
+		
+		return list;
+	}
+
 }

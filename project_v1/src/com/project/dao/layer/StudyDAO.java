@@ -36,5 +36,7 @@ public interface StudyDAO {
 	public boolean existsStudyByUID(String dicomStudyInstanceUid);
 
 	public List<Study> getEndStudiesByidPatient(String idPatient);
+	
+	public List<Study> getStudiesByidPatient(String idPatient);
 
 }

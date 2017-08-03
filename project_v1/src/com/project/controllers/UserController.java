@@ -184,34 +184,54 @@ public class UserController {
 	
 	
 	@RequestMapping(value = "/users/delete/{iduser}", method = RequestMethod.GET)
-	public String userDelete(@PathVariable(value="iduser") String iduser,HttpSession session, Model model){
+	public ModelAndView userDelete(@PathVariable(value="iduser") String iduser,HttpSession session){
+		
+		ModelAndView mav = new ModelAndView("userList");
 		
 		logger.debug("/userUpdate/{iduser} -> UserController.userUpdate()");
 		logger.info("Actualiza datos de usuario.");
 		
+		String message = "";
+		String error = "";
+		
 		String username = SecurityContextHolder.getContext().getAuthentication().getName();
-		model.addAttribute("username",username);
+		mav.addObject("username",username);
+		Users userLogogged = RegistryDAO.getUsersDAO().getUserByUserName(username);
 		int aux = Integer.parseInt(iduser);
 		//model.addAttribute("user", RegistryDAO.getUsersDAO().getUserByID(aux));
 		
 		Users usuario = RegistryDAO.getUsersDAO().getUserByID(aux);
 		
-		//eliminamos el usuario, pero primero tenemos que ver si hay pacientes enlazados con este usuario para ponerlos a NULL antes de borrar el usuario.
+		/*//eliminamos el usuario, pero primero tenemos que ver si hay pacientes enlazados con este usuario para ponerlos a NULL antes de borrar el usuario.
 		Patient patient = RegistryDAO.patientDAO.getPatientByUser(aux);
 		patient.setUsers(null);
 		//actualizamos el paciente con user null
 		RegistryDAO.patientDAO.modificaPatient(patient);
 		
 		//borramos el usuario
-		RegistryDAO.usersDAO.deleteUser(aux);
+		RegistryDAO.usersDAO.deleteUser(aux);*/
 		
-		model.addAttribute("message", "Usuario "+ usuario.getUsername() +" borrado correctamente");
+		//comprobamos que el usuario que tratamos de borrar no sea el usuario logeado
+		if(userLogogged.getUsername().equals(usuario.getUsername())){
+			logger.info("No se puede borrar el usuario logueado");
+			error="No se puede borrar el usuario logueado";
+			
+		}else{
+			//no borramos el usuario.
+			//ponemos su role como NO_ACTIVO
+			usuario.setRole("NO_ACTIVO");
+			RegistryDAO.usersDAO.updateUser(usuario);
+			message="Usuario "+ usuario.getUsername() +" desactivado correctamente";
+		}
+		
+		
+		mav.addObject("message", message);
+		mav.addObject("error", error);
 		
 		List<Users> allUsers = RegistryDAO.getUsersDAO().getAllUsers();
-		model.addAttribute("allUsers", allUsers);
+		mav.addObject("allUsers", allUsers);
 		
-		return "userList";
+		return mav;
 	}
-	
 	
 }

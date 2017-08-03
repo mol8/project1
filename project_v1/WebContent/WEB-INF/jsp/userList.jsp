@@ -25,9 +25,9 @@
 		<script src="${pageContext.request.contextPath}/js/tableFilter.js"></script>
 		<script src="${pageContext.request.contextPath}/js/sortTable.js"></script>
 		<script>
-			function hide(elements) {
+			function hide(elements,message) {
 				elements = elements.length ? elements : [ elements ];
-				if ('${message}' == "") {
+				if (message == "") {
 					for (var index = 0; index < elements.length; index++) {
 						elements[index].style.display = 'none';
 					}
@@ -37,14 +37,15 @@
 
 		<title>User List</title>
 </head>
-<body onload="hide(document.querySelectorAll('.alert'));">
+<body onload="hide(document.querySelectorAll('.alert-success'),'${message}');hide(document.querySelectorAll('.alert-danger'),'${error}');">
 
 
 
 	<nav class="navbar navbar-inverse navbar-fixed-top">
 	<div class="container">
 		<div class="navbar-header">
-			<a class="navbar-brand" href="${pageContext.request.contextPath}/home">INICIO</a>
+			<a class="navbar-brand"
+				href="${pageContext.request.contextPath}/home">INICIO</a>
 		</div>
 		<div id="navbar" class="collapse navbar-collapse">
 			<ul class="nav navbar-nav">
@@ -72,7 +73,8 @@
 			<p>Usuarios almacenados en el sistema</p>
 		</div>
 
-		<div class="alert alert-success" role="alert">${message}</div>
+		<div id="message" class="alert alert-success" role="alert">${message}</div>
+		<div id="error" class="alert alert-danger" role="alert">${error}</div>
 
 		<div class="input-group"
 			style="margin-top: 10px; margin-bottom: 10px;">
@@ -81,6 +83,7 @@
 				placeholder="nombre">
 		</div>
 
+		<div class="table-responsive">
 		<table class="table" id="myTable">
 			<thead class="header">
 				<tr class="header">
@@ -88,25 +91,43 @@
 					<th onclick="sortTable(1)">Apellido</th>
 					<th onclick="sortTable(2)">Email</th>
 					<th onclick="sortTable(3)">Role</th>
-					<th>Accion</th>
+					<th>Acción</th>
 				</tr>
 			</thead>
 			<tbody>
 				<c:forEach items="${allUsers}" var="user">
-					<tr>
-						<td>${user.getName()}</td>
-						<td>${user.getSurename()}</td>
-						<td>${user.getEmail()}</td>
-						<td>${user.getRole()}</td>
-						<td><a class="btn btn-sm btn-success"
-							href="${pageContext.request.contextPath}/users/update/${user.getIduser()}"
-							title="Update">update</a> <a class="btn btn-sm btn-danger"
-							href="${pageContext.request.contextPath}/users/delete/${user.getIduser()}"
-							title="Delete">delete</a></td>
-					</tr>
+
+					<c:choose>
+						<c:when test="${user.getRole()=='NO_ACTIVO'}">
+							<tr bgcolor="#F6CECE">
+								<td>${user.getName()}</td>
+								<td>${user.getSurename()}</td>
+								<td>${user.getEmail()}</td>
+								<td>${user.getRole()}</td>
+								<td><a class="btn btn-sm btn-success"
+									href="${pageContext.request.contextPath}/users/update/${user.getIduser()}"
+									title="Update">update</a></td>
+							</tr>
+						</c:when>
+						<c:otherwise>
+							<tr>
+								<td>${user.getName()}</td>
+								<td>${user.getSurename()}</td>
+								<td>${user.getEmail()}</td>
+								<td>${user.getRole()}</td>
+								<td><a class="btn btn-sm btn-success"
+									href="${pageContext.request.contextPath}/users/update/${user.getIduser()}"
+									title="Update">update</a> <a class="btn btn-sm btn-danger"
+									href="${pageContext.request.contextPath}/users/delete/${user.getIduser()}"
+									title="Delete">Descativar</a></td>
+							</tr>
+						</c:otherwise>
+					</c:choose>
+
 				</c:forEach>
 			</tbody>
 		</table>
+		</div>
 
 		<div class="input-group"
 			style="margin-top: 10px; margin-bottom: 10px;">
@@ -122,7 +143,7 @@
 
 	<footer class="footer" style="margin-top: 10px;">
 	<div class="container">
-		<p class="text-muted">&copy; 2017 Jose Antonio Molins</p>
+		<p class="text-muted">&copy; 2017 José Antonio Molins</p>
 	</div>
 	</footer>
 

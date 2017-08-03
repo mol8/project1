@@ -387,4 +387,28 @@ public class StudyDAO implements com.project.dao.layer.StudyDAO {
 		return stdies;
 	}
 
+	@Override
+	public List<Study> getStudiesByidPatient(String idPatient) {
+		logger.info("Buscamos los estudios del usuario con username");
+
+		Session session = HibernateConnection.doHibernateConnection().openSession();
+
+		Query query = session.createQuery("from Study where idpatient = :idpatient");
+		query.setParameter("idpatient", idPatient);
+		List<Study> studies = query.list();
+
+		logger.info("Numero de estudios encontrados: " + studies.size());
+		for (Study study : studies) {
+			Hibernate.initialize(study.getPatient());
+			Hibernate.initialize(study.getPatient().getUsers());
+			Hibernate.initialize(study.getEquipment());
+			logger.info(study.getIdstudy() + " " + study.getScheduledProcedureStepStartDateTime().toLocaleString());
+			logger.info("Nombre del paciente:" + study.getPatient().getUsers().getName());
+		}
+
+		session.close();
+
+		return studies;
+	}
+
 }

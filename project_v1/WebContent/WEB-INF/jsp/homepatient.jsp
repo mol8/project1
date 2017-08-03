@@ -10,20 +10,20 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
-<!-- Latest compiled and minified CSS -->
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet"
+		href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 
-<!-- jQuery library -->
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+		<!-- jQuery library -->
+		<script
+			src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
 
-<!-- Latest compiled JavaScript -->
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+		<!-- Latest compiled JavaScript -->
+		<script
+			src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 
-<title>Patient Home</title>
+		<title>Patient Home</title>
 </head>
 <body>
 
@@ -58,24 +58,25 @@
 						<div class="col-md-6">
 							<p>Nombre: ${patient.getUsers().getName()}</p>
 							<p>Apellido: ${patient.getUsers().getSurename()}</p>
-							<p>Identificacion: ${patient.getIdpatient()}</p>
+							<p>Identificación: ${patient.getIdpatient()}</p>
 						</div>
 						<div class="col-md-6">
 							<p>Fecha de Nacimiento: ${patient.getDateOfBirth()}</p>
-							<p>Correo electronico: ${patient.getUsers().getSurename()}</p>
+							<p>Correo electrónico: ${patient.getUsers().getSurename()}</p>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 
-		<div class="container">
+<!-- 		<div class="container"> -->
+		<div class="table-responsive">
 			<table class="table" id="myTable">
 				<thead class="header">
 					<tr class="header">
 						<th onclick="sortTable(0)">Fecha</th>
 						<th onclick="sortTable(1)">Hora</th>
-						<th onclick="sortTable(2)">Descripcion</th>
+						<th onclick="sortTable(2)">Descripción</th>
 						<th onclick="sortTable(3)">Modalidad</th>
 						<th onclick="sortTable(4)">Estado</th>
 						<th>Acciones</th>
@@ -113,21 +114,8 @@
 									style="width: 25px; height: 25px;" /></td>
 							</c:when>
 							<c:when test="${study.status=='PROGRAMADO'}">
-								<td><input type="image"
-									src="${pageContext.request.contextPath}/img/waitingroom.jpg"
-									id="saveForm"
-									onclick="window.location='${pageContext.request.contextPath}/entrada/${study.idstudy}';"
-									style="width: 25px; height: 25px;" />
-
-								<input type="image"
+								<td><img
 									src="${pageContext.request.contextPath}/img/calendario.jpg"
-									id="saveForm"
-									onclick="window.location='${pageContext.request.contextPath}/modificaCita/${study.idstudy}';"
-									style="width: 25px; height: 25px;" />
-
-								<input type="image"
-									src="${pageContext.request.contextPath}/img/cancelar.jpg"
-									id="btn_${study.idstudy}" onclick="cancelStudy(this.id)"
 									style="width: 25px; height: 25px;" /></td>
 							</c:when>
 						</c:choose>
@@ -139,7 +127,7 @@
 
 		<footer class="footer">
 		<div class="container">
-			<p class="text-muted">&copy; 2017 Jose Antonio Molins</p>
+			<p class="text-muted">&copy; 2017 José Antonio Molins</p>
 		</div>
 		</footer>
 </body>

@@ -73,9 +73,9 @@ public class loginController {
 			patient = patientIterator.next();
 		}
 		
-		//obtenemos un listado de los estudios finalizados del paciete
+		//obtenemos un listado de los estudios del paciete
 		logger.info("Mostramos listado de estudios finalizados.");
-		List<Study> studies = RegistryDAO.getStudyDAO().getEndStudiesByidPatient(patient.getIdpatient());
+		List<Study> studies = RegistryDAO.getStudyDAO().getStudiesByidPatient(patient.getIdpatient());
 		logger.info("Estudios encontrados: " + studies.size());
 		for (Study study : studies) {
 			logger.info(study.getIdstudy() + " " + study.getPatient().getIdpatient());

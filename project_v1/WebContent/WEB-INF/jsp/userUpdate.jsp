@@ -55,7 +55,7 @@ function defaultSelected() {
 	
 	<div class="container">
 		<div class="jumbotron">
-			<h1>Actuliazacion de usuario</h1>
+			<h1>Actuliazación de usuario</h1>
 		</div>
 		<form action="${pageContext.request.contextPath}/users/update/${user.getIduser()}" method="post">
 			<div class="form-group">
@@ -71,7 +71,7 @@ function defaultSelected() {
 				<input name="username" class="form-control" value="${user.getUsername()}"/>
 			</div>
 			<div class="form-group">
-				<label for="email">Correo electronico</label>
+				<label for="email">Correo electrónico</label>
 				<input name="email" class="form-control" value="${user.getEmail()}"/>
 			</div>
 			<div class="form-group">
@@ -84,6 +84,7 @@ function defaultSelected() {
 				<select id="role" name="role" class="form-control">
 					<option id="ROLE_USUARIO" value="ROLE_USUARIO">Usuario</option>
 					<option id="ROLE_ADMINISTRADOR" value="ROLE_ADMINISTRADOR">Administrador</option>
+					<option id="ROLE_CLINICO" value="ROLE_CLINICO">Clínico</option>
 				</select>
 			</div>
 			<input class="btn btn-primary pull-right" type="submit" value="Actualizar" />
@@ -91,7 +92,7 @@ function defaultSelected() {
 	
 	<footer class="footer">
 		<div class="container">
-			<p class="text-muted">&copy; 2017 Jose Antonio Molins</p>
+			<p class="text-muted">&copy; 2017 José Antonio Molins</p>
 		</div>
 	</footer>
 

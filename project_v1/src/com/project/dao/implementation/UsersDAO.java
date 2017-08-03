@@ -117,4 +117,21 @@ public class UsersDAO implements com.project.dao.layer.UsersDAO{
 		}
 	}
 
+	@Override
+	public List<Users> getAllUsers_ACTIVOS() {
+		logger.info("Iniciamos getAllStudies()");
+		Session session = HibernateConnection.doHibernateConnection().openSession();
+		
+		List<Users> usersActivos = session.createQuery("From Users where role!='NO_ACTIVO'").list();
+		
+		logger.info("Numero de pacientes encontrados: "+ usersActivos.size());
+		for (Users user : usersActivos) {
+			Hibernate.initialize(user.getPatients());
+			logger.info("Nombre del paciente:"+user.getName() + " " + user.getSurename());
+		}		
+		
+		session.close();	
+		return usersActivos;
+	}
+
 }
