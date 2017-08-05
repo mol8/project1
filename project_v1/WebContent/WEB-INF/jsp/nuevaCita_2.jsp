@@ -49,14 +49,15 @@
 
 
 
-	<title>Seleccion de paciente - Nueva Cita</title>
+	<title>Selección de paciente - Nueva Cita</title>
 </head>
 <body onload="defaultSelected();">
 
 	<nav class="navbar navbar-inverse navbar-fixed-top">
 	<div class="container">
 		<div class="navbar-header">
-			<a class="navbar-brand" href="${pageContext.request.contextPath}/home">INICIO</a>
+			<a class="navbar-brand"
+				href="${pageContext.request.contextPath}/home">INICIO</a>
 		</div>
 		<div id="navbar" class="collapse navbar-collapse">
 			<ul class="nav navbar-nav">
@@ -77,8 +78,8 @@
 
 	<div class="container">
 		<div class="jumbotron">
-			<h1>Generacion de cita</h1>
-			<p>Datos para la generacion de nueva cita</p>
+			<h1>Generación de cita</h1>
+			<p>Datos para la generación de nueva cita</p>
 		</div>
 
 
@@ -89,67 +90,59 @@
 				method="post">
 
 				<section>
-				<h2>Datos de paciente</h2>
-				<div class="form-group">
-					<label class="label label-default">Nombre</label> <label>${patient.users.getName()}</label>
-					<%-- <input id="patientName" type="text"
-						name="patientName" class="form-control"
-						value="${patient.users.getName()}" /> --%>
-				</div>
-				<div class="form-group">
-					<label class="label label-default">Apellidos</label> <label>${patient.users.getSurename()}</label>
-					<%-- <input id="patientSurename" type="text"
-						name="patientSurename" class="form-control"
-						value="${patient.users.getSurename()}" /> --%>
-				</div>
-				<div class="form-group">
-					<label class="label label-default">Identificador</label> <label>${patient.getIdpatient()}</label>
-					<%-- <input id="patientId" type="text"
-						name="patientId" class="form-control"
-						value="${patient.getIdpatient()}" /> --%>
+
+				<div class="panel panel-default">
+					<div class="panel-heading">Datos de paciente</div>
+					<div class="panel-body">
+						<p>Paciente: ${patient.users.getName()}
+							${patient.users.getSurename()}</p>
+						<p>ID: ${patient.getIdpatient()}</p>
+					</div>
 				</div>
 				</section>
 
 
 				<section>
-				<h2>Modalidad y descripcion</h2>
-				<div class="form-group">
-					<label>Descripcion</label> <input id="descripcion" type="text"
-						name="descripcion" class="form-control" value="" />
-				</div>
+				<h2>Modalidad y descripción</h2>
+				<div class="panel panel-default">
+					<div class="panel-body">
+						<div class="form-group">
+							<label>Descripción</label> <input id="descripcion" type="text"
+								name="descripcion" class="form-control" value="" />
+						</div>
 
-				<div class="form-group">
-					<label>Modalidad</label> <select id="idequipment"
-						name="idequipment">
-						<c:forEach items="${allEquipment}" var="equipment">
-							<option value="${equipment.getIdequipment()}">${equipment.getModality()}
-								- ${equipment.getAeTitle()}</option>
-						</c:forEach>
-					</select>
-				</div>
+						<div class="form-group">
+							<label>Modalidad</label> <select id="idequipment"
+								name="idequipment">
+								<c:forEach items="${allEquipment}" var="equipment">
+									<option value="${equipment.getIdequipment()}">${equipment.getModality()}
+										- ${equipment.getAeTitle()}</option>
+								</c:forEach>
+							</select>
+						</div>
 
-				<div class="form-group">
-					<label>Medico Remitente</label> <select name="medicoRemitente">
-						<option>1</option>
-						<option>2</option>
-						<option>3</option>
-						<option>4</option>
-						<option>5</option>
-					</select>
-				</div>
+						<div class="form-group">
+							<label>Medico Remitente</label> <select name="medicoRemitente">
+								<option>1</option>
+								<option>2</option>
+								<option>3</option>
+								<option>4</option>
+								<option>5</option>
+							</select>
+						</div>
 
-				<div class="form-group">
-					<label>Departamento</label> <select name="departamento">
-						<option>1</option>
-						<option>2</option>
-						<option>3</option>
-						<option>4</option>
-						<option>5</option>
-					</select>
-				</div>
+						<div class="form-group">
+							<label>Departamento</label> <select name="departamento">
+								<option>1</option>
+								<option>2</option>
+								<option>3</option>
+								<option>4</option>
+								<option>5</option>
+							</select>
+						</div>
 
 
-				<%-- <div class="form-group">
+						<%-- <div class="form-group">
 					<table class="table" id="equipmentTable" name="idequipment">
 						<thead class="header">
 							<tr class="header">
@@ -170,51 +163,59 @@
 							</c:forEach>
 						</tbody>
 					</table>
-				</div> --%> </section>
+				</div> --%>
+					</div>
+				</div>
+				</section>
 
 
 				<section>
 				<h2>Fecha y Hora</h2>
-				<%-- <label>Inicio</label> <input id="fecha" type="text" name="fecha"
+				<div class="panel panel-default">
+					<div class="panel-body">
+						<%-- <label>Inicio</label> <input id="fecha" type="text" name="fecha"
 					value="${inicio}" /> <label>Fin</label> <input id="horaInicio"
 					type="text" name="horaInicio" value="${fin}" /> --%>
-				<div class="form-group">
-					<p id="datepairExample">
+						<div class="form-group">
+							<p id="datepairExample">
 
-						<label>Fecha</label> <input type="text" id="fecha" name="fecha"
-							class="date start" value="${fecha}" /> <label>Hora
-							inicio</label><input type="text" id="horaInicio" name="horaInicio"
-							class="time start" value="${horaInicio}" /> <label>Horafin</label>
-						<input type="text" id="horaFin" name="horaFin" class="time end"
-							value="${horaFin}" />
-						<!-- 					<input type="text" class="date end" /> -->
+								<label>Fecha</label> <input type="text" id="fecha" name="fecha"
+									class="date start" value="${fecha}" /> <label>Hora
+									inicio</label><input type="text" id="horaInicio" name="horaInicio"
+									class="time start" value="${horaInicio}" /> <label>Horafin</label>
+								<input type="text" id="horaFin" name="horaFin" class="time end"
+									value="${horaFin}" />
+								<!-- 					<input type="text" class="date end" /> -->
 
-					</p>
+							</p>
+						</div>
+
+						<script>
+							// initialize input widgets first
+							$('#datepairExample .time').timepicker({
+								'showDuration' : false,
+								'timeFormat' : 'H:i',
+								'minTime' : '9:00',
+								'maxTime' : '23:45',
+								'step' : 15,
+							});
+
+							$('#datepairExample .date').datepicker({
+								'format' : 'd-m-yyyy',
+								'changeYear' : true,
+								'changeMonth' : true,
+								'autoclose' : true
+							});
+
+							// initialize datepair
+							$('#datepairExample').datepair({
+								'defaultTimeDelta' : 900000
+							// milliseconds - 15 min
+							});
+						</script>
+					</div>
 				</div>
-
-				<script>
-					// initialize input widgets first
-					$('#datepairExample .time').timepicker({
-						'showDuration' : false,
-						'timeFormat' : 'H:i',
-						'minTime' : '9:00',
-						'maxTime' : '23:45',
-						'step' : 15,
-					});
-
-					$('#datepairExample .date').datepicker({
-						'format' : 'd-m-yyyy',
-						'changeYear' : true,
-						'changeMonth' : true,
-						'autoclose' : true
-					});
-
-					// initialize datepair
-					$('#datepairExample').datepair({
-						'defaultTimeDelta' : 900000
-					// milliseconds - 15 min
-					});
-				</script> </section>
+				</section>
 
 
 
@@ -225,11 +226,12 @@
 					value="Enviar" />
 			</form>
 		</div>
+	</div>
 
-		<footer class="footer">
-		<div class="container">
-			<p class="text-muted">&copy; 2017 Jose Antonio Molins</p>
-		</div>
-		</footer>
+	<footer class="footer">
+	<div class="container">
+		<p class="text-muted">&copy; 2017 José Antonio Molins</p>
+	</div>
+	</footer>
 </body>
 </html>

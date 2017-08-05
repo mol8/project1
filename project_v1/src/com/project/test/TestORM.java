@@ -42,7 +42,7 @@ public class TestORM {
 		testEquipment.setIdequipment(99);
 		Patient testPatient = new Patient("testID", null, aux, "TEST", null);
 		Users testUser = new Users("testName", "testSurename", "testUsername", "testEmail", "testPassword", "testRole", null);
-		Study testStudy = new Study(null, testEquipment, "testUID", "testReferringPhysician", "testissuer", "testRequestingService", "testRequestingProcedure", "testDescription", null, "testStatus", null,null);
+		Study testStudy = new Study(null, testEquipment, "testUID", "testReferringPhysician", "testissuer", "testRequestingService", "testRequestingProcedure", "testDescription", null, "testStatus", null,null,null);
 		
 		generateORM generate_ORM = new generateORM();
 		generate_ORM.setPID_patientID(testPatient.getIdpatient());

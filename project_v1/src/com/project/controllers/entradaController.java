@@ -139,6 +139,7 @@ public class entradaController {
 
 		// cambiamos el estado delestudio a ENTRADA
 		study.setStatus(Estado.ENTRADA.toString());
+		study.setAccessionNumber(accessionNumber);
 		boolean message = RegistryDAO.getStudyDAO().modificaStudy(study);
 		logger.info("Cambio de estado de estudio " + study.getIdstudy() + " :" + message);
 
@@ -170,6 +171,8 @@ public class entradaController {
 		String path = session.getServletContext().getRealPath("/") + "//WEB-INF//resources//";
 		Properties prop = new Properties();
 		InputStream input = null;
+		
+		String error="";
 
 		input = new FileInputStream(path + File.separator + "config.properties");
 
@@ -199,20 +202,29 @@ public class entradaController {
 		String fileName = path + xml.generateXML();
 
 		logger.info("FileName: " + fileName);
+		
 
-		SendFile sendFile = new SendFile(mirthIP, mirthPort, fileName);
-
-		// cambiamos el estado delestudio a PROGRAMADO
-		study.setStatus(Estado.PROGRAMADO.toString());
-		boolean message = RegistryDAO.getStudyDAO().modificaStudy(study);
-		logger.info("Cambio de estado de estudio " + study.getIdstudy() + " :" + message);
-
+		try {
+			SendFile sendFile = new SendFile(mirthIP, mirthPort, fileName);
+			// cambiamos el estado delestudio a PROGRAMADO
+			study.setStatus(Estado.PROGRAMADO.toString());
+			boolean message = RegistryDAO.getStudyDAO().modificaStudy(study);
+			logger.info("Cambio de estado de estudio " + study.getIdstudy() + " :" + message);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			logger.error(e.getMessage());
+			//e.printStackTrace();
+			error="Fallo en la conexión con el servidor Mirth";
+			
+		}
+		
 		String username = SecurityContextHolder.getContext().getAuthentication().getName();
 		logger.debug("Username: " + username);
 
 		ModelAndView mav = new ModelAndView("home");
 
 		mav.addObject("username", username);
+		mav.addObject("error", error);
 
 		// obtenemos un listado de todos los estudios citados
 		logger.info("Mostramos listado de estudios citados.");

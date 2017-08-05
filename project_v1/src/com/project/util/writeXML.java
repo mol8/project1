@@ -156,7 +156,7 @@ import com.project.pojo.Users;
 
 				// Accession Number
 				Element accessionNumber = doc.createElement("accessionNumber");
-				accessionNumber.appendChild(doc.createTextNode(study.getDicomStudyInstanceUid()));
+				accessionNumber.appendChild(doc.createTextNode(study.getAccessionNumber()));
 				OBR.appendChild(accessionNumber);
 				
 				// name space id obr

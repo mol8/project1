@@ -87,7 +87,7 @@
 					<th onclick="sortTable(0)">Paciente</th>
 					<th onclick="sortTable(1)">Fecha</th>
 					<th onclick="sortTable(2)">Hora</th>
-					<th onclick="sortTable(3)">Descripcion</th>
+					<th onclick="sortTable(3)">Descripción</th>
 					<th onclick="sortTable(4)">Modalidad</th>
 					<th onclick="sortTable(5)">Estado</th>
 					<th>Acciones</th>
@@ -154,7 +154,7 @@
 
 	<footer class="footer" style="margin-top: 10px;">
 	<div class="container">
-		<p class="text-muted">&copy; 2017 Jose Antonio Molins</p>
+		<p class="text-muted">&copy; 2017 José Antonio Molins</p>
 	</div>
 	</footer>
 

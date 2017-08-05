@@ -29,7 +29,7 @@ public class RestProviderController {
 	public String jsonEvents() throws ParseException {
 
 		// obtenemos el usuario logeado de la autenticaci�n
-		String username = SecurityContextHolder.getContext().getAuthentication().getName();
+		//String username = SecurityContextHolder.getContext().getAuthentication().getName();
 
 		// obtenemos los estudiosprogramados
 		List<Study> studiesProgramados = RegistryDAO.getStudyDAO().getStudyPROGRAMADOS();
@@ -37,7 +37,7 @@ public class RestProviderController {
 
 		Date start;
 		Date end;
-		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		//SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
 		JSONArray jArray = new JSONArray();
 		for (Study study : studiesProgramados) {

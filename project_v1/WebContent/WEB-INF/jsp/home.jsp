@@ -50,10 +50,22 @@
 			});
 		}
 	</script>
+	
+	<script>
+			function hide(elements,message) {
+				elements = elements.length ? elements : [ elements ];
+				if (message == "") {
+					for (var index = 0; index < elements.length; index++) {
+						elements[index].style.display = 'none';
+					}
+				}
+			}
+		</script>
 
 	<title>Home</title>
 </head>
-<body>
+<body onload="hide(document.querySelectorAll('.alert-danger'),'${error}');">
+
 
 	<nav class="navbar navbar-inverse navbar-fixed-top">
 	<div class="container">
@@ -82,6 +94,8 @@
 			<h1>Estudios Programados</h1>
 			<p>Selecciona el estudio para dar entrada</p>
 		</div>
+		
+		<div id="error" class="alert alert-danger" role="alert">${error}</div>
 
 		<div class="input-group"
 			style="margin-top: 10px; margin-bottom: 10px;">
@@ -96,7 +110,7 @@
 					<th onclick="sortTable(0)">Paciente</th>
 					<th onclick="sortTable(1)">Fecha</th>
 					<th onclick="sortTable(2)">Hora</th>
-					<th onclick="sortTable(3)">Descripcion</th>
+					<th onclick="sortTable(3)">Descripción</th>
 					<th onclick="sortTable(4)">Modalidad</th>
 					<th onclick="sortTable(5)">Estado</th>
 					<th>Acciones</th>
@@ -124,7 +138,7 @@
 						
 						<c:choose>
 						<c:when test="${study.status=='ENTRADA'}">
-							<td><img
+							<td><input type="image"
 							src="${pageContext.request.contextPath}/img/xray.jpg"
 							style="width: 25px; height: 25px;" />
 							<input type="image"
@@ -168,7 +182,7 @@
 
 	<footer class="footer" style="margin-top: 10px;">
 	<div class="container">
-		<p class="text-muted">&copy; 2017 Jose Antonio Molins</p>
+		<p class="text-muted">&copy; 2017 José Antonio Molins</p>
 	</div>
 	</footer>
 

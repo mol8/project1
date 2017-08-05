@@ -74,7 +74,7 @@
 
 	<div class="container">
 		<div class="jumbotron">
-			<h1>Actuliazacion de datos de paciente</h1>
+			<h1>Actuliazación de datos de paciente</h1>
 		</div>
 		<form
 			action="${pageContext.request.contextPath}/patient/update/${patient.getIdpatient()}"
@@ -101,7 +101,7 @@
 					value="${patient.getDateOfBirth()}" />
 			</div>
 			<div class="form-group">
-				<label for="email">Correo electronico</label> <input name="email"
+				<label for="email">Correo electrónico</label> <input name="email"
 					class="form-control" value="${user.getEmail()}" />
 			</div>
 			<div class="form-group">
@@ -129,7 +129,7 @@
 
 		<footer class="footer">
 		<div class="container">
-			<p class="text-muted">&copy; 2017 Jose Antonio Molins</p>
+			<p class="text-muted">&copy; 2017 José Antonio Molins</p>
 		</div>
 		</footer>
 </body>

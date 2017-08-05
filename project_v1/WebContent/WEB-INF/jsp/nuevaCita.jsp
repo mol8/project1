@@ -23,7 +23,7 @@
 		src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	<script src="${pageContext.request.contextPath}/js/tableFilter.js"></script>
 	<script src="${pageContext.request.contextPath}/js/sortTable.js"></script>
-<title>Seleccion de paciente - Nueva Cita</title>
+<title>Selección de paciente - Nueva Cita</title>
 </head>
 <body>
 
@@ -93,7 +93,7 @@
 
 	<footer class="footer" style="margin-top: 10px;">
 	<div class="container">
-		<p class="text-muted">&copy; 2017 Jose Antonio Molins</p>
+		<p class="text-muted">&copy; 2017 José Antonio Molins</p>
 	</div>
 	</footer>
 

@@ -80,7 +80,7 @@
 
 	<div class="container">
 		<div class="jumbotron">
-			<h1>Modificacion de datos de citacion</h1>
+			<h1>Modificación de datos de citación</h1>
 			<p></p>
 		</div>
 
@@ -92,7 +92,7 @@
 				method="post">
 
 				<section>
-				<h2>Seleccion de Paciente</h2>
+				<h2>Selección de Paciente</h2>
 
 				<div class="form-group">
 					<label>Paciente</label> <select id="idpatient" name="idpatient">
@@ -105,9 +105,9 @@
 				</div>
 				</section>
 				<section>
-				<h2>Modalidad y descripcion</h2>
+				<h2>Modalidad y descripción</h2>
 				<div class="form-group">
-					<label>Descripcion</label> <input id="descripcion" type="text"
+					<label>Descripción</label> <input id="descripcion" type="text"
 						name="descripcion" class="form-control" value="${estudio.getRequestedProcedureDescription()}" />
 				</div>
 
@@ -198,7 +198,7 @@
 
 		<footer class="footer">
 		<div class="container">
-			<p class="text-muted">&copy; 2017 Jose Antonio Molins</p>
+			<p class="text-muted">&copy; 2017 José Antonio Molins</p>
 		</div>
 		</footer>
 </body>

@@ -1,6 +1,6 @@
 package com.project.pojo;
 // default package
-// Generated Jan 14, 2017 12:09:05 AM by Hibernate Tools 5.2.0.CR1
+// Generated Aug 5, 2017 6:05:05 PM by Hibernate Tools 3.4.0.CR1
 
 import java.util.HashSet;
 import java.util.Set;
@@ -46,7 +46,7 @@ public class Equipment implements java.io.Serializable {
 		this.idequipment = idequipment;
 	}
 
-	@Column(name = "modality", length = 3)
+	@Column(name = "modality", length = 4)
 	public String getModality() {
 		return this.modality;
 	}

@@ -1,6 +1,6 @@
 package com.project.pojo;
 // default package
-// Generated Jan 14, 2017 12:09:05 AM by Hibernate Tools 5.2.0.CR1
+// Generated Aug 5, 2017 6:05:05 PM by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import java.util.HashSet;
@@ -33,9 +33,8 @@ public class Patient implements java.io.Serializable {
 	public Patient() {
 	}
 
-	public Patient(String idpatient, Users users) {
+	public Patient(String idpatient) {
 		this.idpatient = idpatient;
-		this.users = users;
 	}
 
 	public Patient(String idpatient, Users users, Date dateOfBirth, String sex, Set studies) {
@@ -44,6 +43,11 @@ public class Patient implements java.io.Serializable {
 		this.dateOfBirth = dateOfBirth;
 		this.sex = sex;
 		this.studies = studies;
+	}
+	
+	public Patient(String idpatient, Users users) {
+		this.idpatient = idpatient;
+		this.users = users;
 	}
 
 	@Id

@@ -9,13 +9,10 @@ public class SendFile {
 
 	private Socket s;
 
-	public SendFile(String host, int port, String file) {
-		try {
+	public SendFile(String host, int port, String file) throws Exception{
 			s = new Socket(host, port);
 			file(file);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+
 	}
 
 	public void file(String file) throws IOException {

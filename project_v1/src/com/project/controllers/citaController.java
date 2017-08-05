@@ -21,6 +21,7 @@ import com.project.dao.registry.RegistryDAO;
 import com.project.pojo.Equipment;
 import com.project.pojo.Patient;
 import com.project.pojo.Study;
+import com.project.pojo.Users;
 import com.project.util.SendMail;
 import com.project.util.TimeUtil;
 
@@ -130,6 +131,7 @@ public class citaController {
 
 		// con estos datos y los de paciente generamos el estudio.
 		Patient patient = RegistryDAO.getPatientDAO().getPatientByID(idPatient);
+		Users user = patient.getUsers();
 		Equipment equipment = RegistryDAO.getEquipmentDAO().getEquipmentByID(Integer.parseInt(idequipment));
 		Study estudio = new Study(patient, equipment);
 		// generamos el identificador unico de estudio
@@ -140,6 +142,10 @@ public class citaController {
 		estudio.setReferringPhysician("test");
 		// seguro
 		estudio.setIssuer("test");
+		//descripción
+		estudio.setRequestedProcedureDescription(descripcion);
+		//codigo estudio
+		estudio.setRequestedProcedureCode(descripcion);
 		// requesting service
 		estudio.setRequestingService("test");
 		// ponemos el estado del estudio a programado
@@ -187,7 +193,12 @@ public class citaController {
 		RegistryDAO.getStudyDAO().addStudy(estudio);
 
 		// enviamos un mail al usuario recordandole los datos de la cita
-		SendMail sendMail = new SendMail(patient.getUsers().getEmail(), "test", request);
+		String mailText = "Estimado/a "+user.getName()+" "+user.getSurename()+" \n"+
+						"Le recordamos que tiene una cita para realizarse una prueba diagnóstica.\n "+
+						"Día: "+estudio.fechaString(estudio.getScheduledProcedureStepStartDateTime())+" \n"+
+						"Hora: "+estudio.horaString(estudio.getScheduledProcedureStepStartDateTime())+" \n"+
+						"Atentamente.";
+		SendMail sendMail = new SendMail(patient.getUsers().getEmail(), mailText, request);
 		sendMail.start();
 
 		mav.addObject("messageSuccess", "El estudio se ha creado correctamente y se ha insertado en la base de datos");

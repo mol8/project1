@@ -116,7 +116,7 @@ xmlns:h="http://java.sun.com/jsf/html">
 	
 	<footer class="footer" style="margin-top: 10px;">
 		<div class="container">
-			<p class="text-muted">&copy; 2017 Jose Antonio Molins</p>
+			<p class="text-muted">&copy; 2017 José Antonio Molins</p>
 		</div>
 	</footer>
 

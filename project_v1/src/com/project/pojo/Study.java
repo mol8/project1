@@ -1,6 +1,6 @@
 package com.project.pojo;
 // default package
-// Generated May 13, 2017 9:11:47 PM by Hibernate Tools 3.4.0.CR1
+// Generated Aug 5, 2017 6:05:05 PM by Hibernate Tools 3.4.0.CR1
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -37,19 +37,15 @@ public class Study implements java.io.Serializable {
 	private String status;
 	private Date scheduledProcedureStepEndDateTime;
 	private String url;
+	private String accessionNumber;
 
 	public Study() {
-	}
-	
-	public Study(Patient patient, Equipment equipment) {
-		this.patient = patient;
-		this.equipment = equipment;
 	}
 
 	public Study(Patient patient, Equipment equipment, String dicomStudyInstanceUid, String referringPhysician,
 			String issuer, String requestingService, String requestedProcedureCode,
 			String requestedProcedureDescription, Date scheduledProcedureStepStartDateTime, String status,
-			Date scheduledProcedureStepEndDateTime, String url) {
+			Date scheduledProcedureStepEndDateTime, String url, String accessionNumber) {
 		this.patient = patient;
 		this.equipment = equipment;
 		this.dicomStudyInstanceUid = dicomStudyInstanceUid;
@@ -62,6 +58,12 @@ public class Study implements java.io.Serializable {
 		this.status = status;
 		this.scheduledProcedureStepEndDateTime = scheduledProcedureStepEndDateTime;
 		this.url = url;
+		this.accessionNumber = accessionNumber;
+	}
+	
+	public Study(Patient patient, Equipment equipment) {
+		this.patient = patient;
+		this.equipment = equipment;
 	}
 
 	@Id
@@ -187,6 +189,15 @@ public class Study implements java.io.Serializable {
 	public void setUrl(String url) {
 		this.url = url;
 	}
+
+	@Column(name = "accession_number", length = 50)
+	public String getAccessionNumber() {
+		return this.accessionNumber;
+	}
+
+	public void setAccessionNumber(String accessionNumber) {
+		this.accessionNumber = accessionNumber;
+	}
 	
 	public String fechaString(Date date){
 		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy"); 
@@ -198,6 +209,6 @@ public class Study implements java.io.Serializable {
 		SimpleDateFormat sdf = new SimpleDateFormat("HH:mm"); 
 		String currentData = sdf.format(date); 
 	return currentData;
-	}
+}
 
 }
